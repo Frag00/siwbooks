@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+ <head>
+	 <title>New Book</title>
+ </head>
+ <body>	
+	 <h1>Aggiungi un libro</h1>
+	 <form th:action="@{/pippo}" method="POST" th:object="${book}">
+		<div>
+		 Titolo: <span><input required type="text" th:field="${book.titolo}"/></span>
+		 </div>
+		 <div>
+		 Anno di Pubblicazione: <span><input required type="text" th:field="${book.annoPubblicazione}"/></span>
+		 </div>
+		 <div>
+		 <span><button type="submit">Aggiungi</button></span>
+		 </div>
+	 </form>
+ </body>
+</html>
