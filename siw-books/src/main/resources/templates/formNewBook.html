@@ -6,11 +6,16 @@
  <body>	
 	 <h1>Aggiungi un libro</h1>
 	 <form th:action="@{/pippo}" method="POST" th:object="${book}">
+		<div th:if="${errEsiste}">
+		 	<p th:text="${errEsiste}"></p>
+		</div>
 		<div>
-		 Titolo: <span><input required type="text" th:field="${book.titolo}"/></span>
+		 Titolo: <span><input type="text" th:field="${book.titolo}"/></span>
+		 <span th:if="${#fields.hasErrors('titolo')}" th:errors="${book.titolo}"></span>
 		 </div>
 		 <div>
-		 Anno di Pubblicazione: <span><input required type="text" th:field="${book.annoPubblicazione}"/></span>
+		 Anno di Pubblicazione: <span><input type="text" th:field="${book.annoPubblicazione}"/></span>
+		 <span th:if="${#fields.hasErrors('annoPubblicazione')}" th:errors="${book.annoPubblicazione}"></span>
 		 </div>
 		 <div>
 		 <span><button type="submit">Aggiungi</button></span>

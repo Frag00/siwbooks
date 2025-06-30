@@ -3,6 +3,7 @@ package it.uniroma3.siw.model;
 import java.util.Objects;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Credentials {
@@ -14,10 +15,11 @@ public class Credentials {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotBlank
 	private String username;
-	
+	@NotBlank
 	private String password;
-	
+	@NotBlank
 	private String ruolo;
 	
 	@OneToOne(cascade = CascadeType.ALL)

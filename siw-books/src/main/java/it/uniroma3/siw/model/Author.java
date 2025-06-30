@@ -3,8 +3,11 @@ package it.uniroma3.siw.model;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Author {
@@ -13,21 +16,25 @@ public class Author {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotBlank
 	private String nome;
 	
+	@NotBlank
 	private String cognome;
 	
+	@NotNull
 	private LocalDate dataNascita;
 	
 	private LocalDate dataMorte;
 	
+	@NotBlank
 	private String nazionalità;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Picture immagine;
 	
 	@ManyToMany
-	private List<Book> libri;
+	private Set<Book> libri;
 
 	public Author() {}
 	
@@ -87,11 +94,11 @@ public class Author {
 		this.immagine = immagine;
 	}
 
-	public List<Book> getLibri() {
+	public Set<Book> getLibri() {
 		return libri;
 	}
 
-	public void setLibri(List<Book> libri) {
+	public void setLibri(Set<Book> libri) {
 		this.libri = libri;
 	}
 

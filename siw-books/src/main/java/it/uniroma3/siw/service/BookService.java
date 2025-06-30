@@ -23,4 +23,7 @@ public class BookService {
 	public void saveBook(Book book) {
 		this.bookRepository.save(book);
 	}
+	public boolean existsByTitoloAndAnno(Book book) {
+		return this.bookRepository.existsByTitoloAndAnnoPubblicazione(book.getTitolo(), book.getAnnoPubblicazione());
+	}
 }

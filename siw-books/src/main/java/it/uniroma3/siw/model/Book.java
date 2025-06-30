@@ -2,8 +2,12 @@ package it.uniroma3.siw.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 @Entity
 public class Book {
 	
@@ -11,18 +15,21 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotNull
 	private Integer annoPubblicazione;
 	
+	@NotBlank
 	private String titolo;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Picture> immagini;
+	private Set<Picture> immagini;
 	
+	//@NotEmpty
 	@ManyToMany(mappedBy = "libri")
-	private List<Author> autori;
+	private Set<Author> autori;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "libro")
-	private List<Review> recensioni;
+	private Set<Review> recensioni;
 	
 	public Book() {}
 
@@ -50,27 +57,27 @@ public class Book {
 		this.titolo = titolo;
 	}
 
-	public List<Picture> getImmagini() {
+	public Set<Picture> getImmagini() {
 		return immagini;
 	}
 
-	public void setImmagini(List<Picture> immagini) {
+	public void setImmagini(Set<Picture> immagini) {
 		this.immagini = immagini;
 	}
 
-	public List<Author> getAutori() {
+	public Set<Author> getAutori() {
 		return autori;
 	}
 
-	public void setAutori(List<Author> autori) {
+	public void setAutori(Set<Author> autori) {
 		this.autori = autori;
 	}
 
-	public List<Review> getRecensioni() {
+	public Set<Review> getRecensioni() {
 		return recensioni;
 	}
 
-	public void setRecensioni(List<Review> recensioni) {
+	public void setRecensioni(Set<Review> recensioni) {
 		this.recensioni = recensioni;
 	}
 

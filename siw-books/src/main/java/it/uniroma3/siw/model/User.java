@@ -2,6 +2,7 @@ package it.uniroma3.siw.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
@@ -19,14 +21,17 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotBlank
 	private String nome;
 	
+	@NotBlank
 	private String cognome;
 	
+	@NotBlank
 	private String email;
 	
 	@OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
-	private List<Review> recensioni;
+	private Set<Review> recensioni;
 
 	public User() {}
 	
@@ -62,11 +67,11 @@ public class User {
 		this.email = email;
 	}
 
-	public List<Review> getRecensioni() {
+	public Set<Review> getRecensioni() {
 		return recensioni;
 	}
 
-	public void setRecensioni(List<Review> recensioni) {
+	public void setRecensioni(Set<Review> recensioni) {
 		this.recensioni = recensioni;
 	}
 

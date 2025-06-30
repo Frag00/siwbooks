@@ -3,6 +3,10 @@ package it.uniroma3.siw.model;
 import java.util.Objects;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Review {
@@ -11,16 +15,22 @@ public class Review {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotBlank
 	private String titolo;
 	
+	@NotNull
+	@Min(1)
+	@Max(5)
 	private Integer voto;
-	
+	@NotBlank
 	private String testo;
 	
 	@ManyToOne
+	@NotNull
 	private Book libro;
 	
 	@ManyToOne
+	@NotNull
 	private User utente;
 
 	public Review() {}
