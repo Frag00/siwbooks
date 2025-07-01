@@ -7,6 +7,14 @@
 		<div th:if="${book}">
 			<h1 th:text="${book.titolo}">Titolo Libro</h1>
 			<div>Anno di pubblicazione: <span th:text="${book.annoPubblicazione} ">2000</span></div>
+			<div th:if="${!book.autori.isEmpty()}">
+				<h3>Autori:</h3>
+					<ul>
+						<li th:each="autore : ${book.autori}">
+							<span th:text="${autore.nome + ' ' + autore.cognome}">Autore</span>
+						</li>
+					</ul>
+			</div>
 		</div>
 		<div th:unless="${book}">Non esiste</div>
 	</body>

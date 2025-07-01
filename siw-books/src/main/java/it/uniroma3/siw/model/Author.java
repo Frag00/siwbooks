@@ -28,7 +28,7 @@ public class Author {
 	private LocalDate dataMorte;
 	
 	@NotBlank
-	private String nazionalità;
+	private String nazionalita;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Picture immagine;
@@ -78,12 +78,12 @@ public class Author {
 		this.dataMorte = dataMorte;
 	}
 
-	public String getNazionalità() {
-		return nazionalità;
+	public String getNazionalita() {
+		return nazionalita;
 	}
 
-	public void setNazionalità(String nazionalità) {
-		this.nazionalità = nazionalità;
+	public void setNazionalita(String nazionalita) {
+		this.nazionalita = nazionalita;
 	}
 
 	public Picture getImmagine() {
@@ -123,7 +123,7 @@ public class Author {
 	@Override
 	public String toString() {
 		return "Author [nome=" + nome + ", cognome=" + cognome + ", dataNascita=" + dataNascita + ", dataMorte="
-				+ dataMorte + ", nazionalità=" + nazionalità + "]";
+				+ dataMorte + ", nazionalità=" + nazionalita + "]";
 	}
 	
 	

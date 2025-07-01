@@ -18,8 +18,20 @@
 		 <span th:if="${#fields.hasErrors('annoPubblicazione')}" th:errors="${book.annoPubblicazione}"></span>
 		 </div>
 		 <div>
+		     <label>Autori:</label>
+		     <div th:each="autore : ${authors}">
+		         <label>
+		             <input type="checkbox" 
+					 		name = "autori"
+		                    th:value="${autore.id}" /> 
+		             <span th:text="${autore.nome + ' ' + autore.cognome}"></span>
+		         </label>
+		     </div>
+		 </div>
+		 <div>
 		 <span><button type="submit">Aggiungi</button></span>
 		 </div>
+		 
 	 </form>
  </body>
 </html>
