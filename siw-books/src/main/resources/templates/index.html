@@ -6,6 +6,15 @@
   </head>
   <body>
       <h1><strong>SiwBooks</strong></h1>
+	  <header>
+		<p th:if="${user}">
+			<span th:text="${user.nome}"></span>
+	  		<span><a href="/logout">Logout</a></span>
+		</p>
+		<p th:unless="${user}">
+			<span><a href="/login">Accedi</a></span></p>
+			<span><a href="/register">Registrati</a></span></p>	
+	  </header>
 	  <h2>Pagina iniziale</h2>
 	  <p><a href="/book">Tutti i libri</a></p>
   </body>

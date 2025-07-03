@@ -49,6 +49,12 @@ public class BookController {
 		model.addAttribute("books", this.bookService.getAllBooks());
 		return "books.html";
 	}
+	///////////////////////// cancella 
+	@GetMapping("user/book")
+	public String showsBooks(Model model) {
+		model.addAttribute("books", this.bookService.getAllBooks());
+		return "books.html";
+	}
 	
 	@GetMapping("/book/{id}")
 	public String getBook(@PathVariable("id") Long id, Model model) {

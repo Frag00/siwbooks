@@ -31,7 +31,7 @@ public class AuthConfiguration {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource)
-				.authoritiesByUsernameQuery("SELECT username, role from credentials WHERE username=?")
+				.authoritiesByUsernameQuery("SELECT username, ruolo from credentials WHERE username=?")
 				.usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
 	}
 
@@ -41,8 +41,8 @@ public class AuthConfiguration {
 		httpSecurity.csrf().and().cors().disable().authorizeHttpRequests()
 				// Consentiti a tutti (occasionali)
 				.requestMatchers(HttpMethod.GET, "/", "/index", "/book/**", "/authors/**",
-						"/login", "/register", "/css/**", "/images/**", "favicon.ico")
-				.permitAll().requestMatchers(HttpMethod.POST, "/register", "/login",  "/images/**")
+						"/login", "/register", "/css/**", "/immagini/**", "favicon.ico")
+				.permitAll().requestMatchers(HttpMethod.POST, "/register", "/login",  "/immagini/**")
 				.permitAll()
 
 				// Solo ADMIN_ROLE
@@ -72,10 +72,10 @@ public class AuthConfiguration {
 					boolean isAdmin = this.credentialsService.getCredentialsByUsername(username).getRuolo().equals(ruoloAdmin);
 					if (isAdmin) {
 						// Se ADMIN, redirect operatore (sostituisci idUtente)
-						response.sendRedirect(idUtente != null ? "/admin/books": "/login");
+						response.sendRedirect(idUtente != null ? "/admin/book": "/login");
 					} else {
 						// Se Utente, redirect utente (sostituisci idUtente)
-						response.sendRedirect(idUtente != null ? "/user/books" : "/login");
+						response.sendRedirect(idUtente != null ? "user/book" : "/login");
 					}
 				}).failureUrl("/login?error=true").permitAll().and().logout().logoutUrl("/logout")
 				.logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID")

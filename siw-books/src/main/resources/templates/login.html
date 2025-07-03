@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SiwBooks</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+      <h1><strong>SiwBooks</strong></h1>
+	  <h2>Hai già un account? Accedi</h2>
+	  <form th:action="@{/login}" method="post">
+		<div>
+			<span>Username : </span>
+			<span><input type="text" required name="username"></span>
+		</div>
+		<div>
+			<span>Password : </span>
+			<span><input type="text" required name="pwd"></span>
+		</div>
+		<span><button type="submit">Login</button></span>
+	  </form>
+	  <p><a href="/register">Registrati</a></p>
+  </body>
+</html>
