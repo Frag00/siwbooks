@@ -33,7 +33,7 @@ public class Author {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Picture immagine;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy = "autori")
 	private Set<Book> libri;
 
 	public Author() {}

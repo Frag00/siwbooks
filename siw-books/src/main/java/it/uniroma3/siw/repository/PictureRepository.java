@@ -1,5 +1,10 @@
 package it.uniroma3.siw.repository;
 
-public interface PictureRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import it.uniroma3.siw.model.Book;
+import it.uniroma3.siw.model.Picture;
+
+public interface PictureRepository extends CrudRepository<Picture,Long> {
 
 }

@@ -25,7 +25,7 @@ public class Book {
 	private Set<Picture> immagini;
 	
 	//@NotEmpty
-	@ManyToMany(mappedBy = "libri",fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Author> autori;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "libro")

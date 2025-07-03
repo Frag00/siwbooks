@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 public class Picture {
 	
-	public final static String path = "/immagini/";
+	public final static String PATH = "/immagini/";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +20,7 @@ public class Picture {
 	public Picture() {}
 	
 	public Picture(String nome) {
-		this.nome = path + nome;
+		this.nome = PATH + nome;
 	}
 
 	public Long getId() {
@@ -36,7 +36,7 @@ public class Picture {
 	}
 
 	public void setNome(String nome) {
-		this.nome = path + nome;
+		this.nome = PATH + nome;
 	}
 
 	@Override

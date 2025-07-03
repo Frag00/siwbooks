@@ -14,8 +14,26 @@
 							<span th:text="${autore.nome + ' ' + autore.cognome}">Autore</span>
 						</li>
 					</ul>
-			</div>
+			</div> 
+			<div th:if="${!book.recensioni.isEmpty()}">
+							<h3>Recensioni:</h3>
+								<ul>
+									<li th:each="r : ${book.recensioni}">
+										<span th:utext="${r.titolo + '<br/>' + r.voto + '<br/>' + r.testo + '<br/>' + r.utente}">Recensione</span>
+									</li>
+								</ul>
+						</div>
+			<div th:if="${!book.immagini.isEmpty()}">
+			  <h3>Immagini:</h3>
+			  <div>
+			    <img th:each="img : ${book.immagini}" 
+			         th:src="${img.nome}" 
+			         alt="Immagine libro" 
+			         style="max-width: 200px; max-height: 200px; margin: 5px;" />
+			  </div>
+			</div> 
 		</div>
 		<div th:unless="${book}">Non esiste</div>
+		<a href="/book">Torna ai libri</a>
 	</body>
 </html>

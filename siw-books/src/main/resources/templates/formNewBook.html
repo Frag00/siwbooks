@@ -5,7 +5,7 @@
  </head>
  <body>	
 	 <h1>Aggiungi un libro</h1>
-	 <form th:action="@{/pippo}" method="POST" th:object="${book}">
+	 <form th:action="@{/pippo}" method="POST" th:object="${book}" enctype="multipart/form-data">
 		<div th:if="${errEsiste}">
 		 	<p th:text="${errEsiste}"></p>
 		</div>
@@ -29,9 +29,19 @@
 		     </div>
 		 </div>
 		 <div>
+		 	            <label for="imageFiles">Immagini</label>
+		 	            <input type="file" 
+		 	                   name="imageFiles" 
+		 	                   id="imageFiles" 
+		 	                   multiple 
+		 	                   accept="image/*" 
+		 	                   required/>
+		 </div>
+		 <div>
 		 <span><button type="submit">Aggiungi</button></span>
 		 </div>
 		 
 	 </form>
+	 <a href="/book">Torna ai libri</a>
  </body>
 </html>
