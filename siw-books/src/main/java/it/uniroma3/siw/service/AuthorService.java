@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.repository.AuthorRepository;
+import jakarta.validation.Valid;
 import it.uniroma3.siw.model.*;
 
 @Service
@@ -24,5 +25,13 @@ public class AuthorService {
 
 	public Author getAuthorById(Long autorId) {
 		return authorRepository.findById(autorId).orElse(null);
+	}
+
+	public boolean existsByNomeAndCognomeAndDataNascita(@Valid Author author) {
+		return authorRepository.existsByNomeAndCognomeAndDataNascita(author.getNome(),author.getCognome(),author.getDataNascita());
+	}
+
+	public void saveAuthor(@Valid Author author) {
+		authorRepository.save(author);
 	}
 }

@@ -40,7 +40,7 @@ public class AuthConfiguration {
 	protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().and().cors().disable().authorizeHttpRequests()
 				// Consentiti a tutti (occasionali)
-				.requestMatchers(HttpMethod.GET, "/", "/index", "/book/**", "/authors/**",
+				.requestMatchers(HttpMethod.GET, "/", "/index", "/book/**", "/author/**",
 						"/login", "/register", "/css/**", "/immagini/**", "favicon.ico")
 				.permitAll().requestMatchers(HttpMethod.POST, "/register", "/login",  "/immagini/**")
 				.permitAll()
@@ -72,10 +72,10 @@ public class AuthConfiguration {
 					boolean isAdmin = this.credentialsService.getCredentialsByUsername(username).getRuolo().equals(ruoloAdmin);
 					if (isAdmin) {
 						// Se ADMIN, redirect operatore (sostituisci idUtente)
-						response.sendRedirect(idUtente != null ? "/admin/book": "/login");
+						response.sendRedirect(idUtente != null ? "/admin": "/login");
 					} else {
 						// Se Utente, redirect utente (sostituisci idUtente)
-						response.sendRedirect(idUtente != null ? "user/book" : "/login");
+						response.sendRedirect(idUtente != null ? "/user" : "/login");
 					}
 				}).failureUrl("/login?error=true").permitAll().and().logout().logoutUrl("/logout")
 				.logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID")

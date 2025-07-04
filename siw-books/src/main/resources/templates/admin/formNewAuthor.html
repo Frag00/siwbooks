@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+	 <title>New Author</title>
+ </head>
+ <body>	
+ <div th:if="${user}">
+			<p th:text="${user.nome + ' ' + user.cognome}"></p>
+	  		<p><a href="/logout">Logout</a></p>
+		</div>
+	 <h1>Aggiungi un autore</h1>
+	 <form th:action="@{/admin/nuovoAuthor}" method="POST" th:object="${author}" enctype="multipart/form-data">
+		<div th:if="${errEsiste}">
+		 	<p th:text="${errEsiste}"></p>
+		</div>
+		<div>
+		 Nome: <span><input type="text" th:field="${author.nome}"/></span>
+		 <span th:if="${#fields.hasErrors('nome')}" th:errors="${author.nome}"></span>
+		 </div>
+		 <div>
+		 Cognome: <span><input type="text" th:field="${author.cognome}"/></span>
+		 <span th:if="${#fields.hasErrors('cognome')}" th:errors="${author.cognome}"></span>
+		 </div>
+		 <div>
+		Data di nascita formato ****/**/**: <span><input type="date" th:field="${author.dataNascita}"/></span>
+		 <span th:if="${#fields.hasErrors('dataNascita')}" th:errors="${author.dataNascita}"></span>
+		 </div>
+		 <div>
+		Data di morte formato ****/**/**: <span><input type="date" th:field="${author.dataMorte}"/></span>
+		 <span th:if="${#fields.hasErrors('dataMorte')}" th:errors="${author.dataMorte}"></span>
+		 </div>
+		 <div>
+		 Nazionalità : <span><input type="text" th:field="${author.nazionalita}"/></span>
+		 <span th:if="${#fields.hasErrors('nazionalita')}" th:errors="${author.nazionalita}"></span>
+		 </div>
+		 <div>
+		 	            <label for="imageFile">Immagine</label>
+		 	            <input type="file" 
+		 	                   name="imageFile" 
+		 	                   id="imageFile"  
+		 	                   accept="image/*" 
+		 	                   required/>
+		 </div>
+		 <div th:if="${msgError}"><span th:text="${msgError}"></span>
+		 </div>
+		 <div>
+		 <span><button type="submit">Aggiungi</button></span>
+		 </div>
+		 
+	 </form>
+	 <a href="/admin/book">Torna ai Libri</a>
+	  <p><a href="/admin">Torna alla home</a></p>
+ </body>
+</html>

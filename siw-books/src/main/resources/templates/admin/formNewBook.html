@@ -4,6 +4,10 @@
 	 <title>New Book</title>
  </head>
  <body>	
+	<div th:if="${user}">
+				<p th:text="${user.nome + ' ' + user.cognome}"></p>
+		  		<p><a href="/logout">Logout</a></p>
+			</div>
 	 <h1>Aggiungi un libro</h1>
 	 <form th:action="@{/pippo}" method="POST" th:object="${book}" enctype="multipart/form-data">
 		<div th:if="${errEsiste}">
@@ -43,5 +47,6 @@
 		 
 	 </form>
 	 <a href="/book">Torna ai libri</a>
+	 <p><a href="/admin">Torna alla home</a></p>
  </body>
 </html>

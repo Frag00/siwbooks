@@ -50,10 +50,15 @@ public class BookController {
 		return "books.html";
 	}
 	///////////////////////// cancella 
-	@GetMapping("user/book")
+	@GetMapping("/user/book")
 	public String showsBooks(Model model) {
 		model.addAttribute("books", this.bookService.getAllBooks());
-		return "books.html";
+		return "user/books.html";
+	}
+	@GetMapping("/admin/book")
+	public String showsBooksAdmin(Model model) {
+		model.addAttribute("books", this.bookService.getAllBooks());
+		return "admin/books.html";
 	}
 	
 	@GetMapping("/book/{id}")
@@ -62,16 +67,24 @@ public class BookController {
 		return "book.html";
 	}
 	
-	@GetMapping("/")
-	public String getIndex() {
-		return "index.html";
+	@GetMapping("/admin/book/{id}")
+	public String getBookAdmin(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("book",this.bookService.getBookById(id));
+		return "admin/book.html";
 	}
 	
-	@GetMapping("/form")
+	@GetMapping("/user/book/{id}")
+	public String getBookUser(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("book",this.bookService.getBookById(id));
+		return "user/book.html";
+	}
+	
+	
+	@GetMapping("/admin/formNewBook")
 	public String getForm(Model model) {
 		model.addAttribute("book", new Book());
 		model.addAttribute("authors",authorService.getAllAuthors());
-		return "formNewBook.html";
+		return "admin/formNewBook.html";
 	}
 	
 	@PostMapping("/pippo")
@@ -79,12 +92,12 @@ public class BookController {
 		if(this.bookService.existsByTitoloAndAnno(book)) {
 			model.addAttribute("errEsiste","Libro già presente");
 			model.addAttribute("authors",authorService.getAllAuthors());
-			return "formNewBook.html";
+			return "admin/formNewBook.html";
 		}
 		else if(bindingResult.hasErrors()) {
 			model.addAttribute("authors",authorService.getAllAuthors());
 
-			return "formNewBook.html";
+			return "admin/formNewBook.html";
 		}
 		
 		else {
@@ -106,7 +119,7 @@ public class BookController {
 	        	model.addAttribute("msgError", "Inserire almeno una foto");
 	        	model.addAttribute("book",book);
 	        	model.addAttribute("authors",authorService.getAllAuthors());
-	            return "formNewBook.html";
+	            return "admin/formNewBook.html";
 	        }
 
 	        try {
@@ -126,13 +139,13 @@ public class BookController {
 	        
 		this.bookService.saveBook(book);
 		model.addAttribute("book",book);
-		return "redirect:book/"+book.getId();
+		return "redirect:admin/book/"+book.getId();
 	      }
 	        
 	        catch (Exception e) {
 	            model.addAttribute("msgError", "Errore nel salvataggio del libro:\n"+ e.toString());
 	            model.addAttribute("authors",authorService.getAllAuthors());
-	            return "formNewBook.html";
+	            return "admin/formNewBook.html";
 	        }
 		}
 	}

@@ -21,6 +21,21 @@ public class AuthController {
 	@Autowired UserService userService;
 	@Autowired BookService bookService;
 	
+	@GetMapping("/")
+	public String getIndex() {
+		return "index.html";
+	}
+	
+	@GetMapping("/admin")
+	public String getIndexAdmin() {
+		return "admin/adminHome.html";
+	}
+	
+	@GetMapping("/user")
+	public String getIndexUser() {
+		return "user/userHome.html";
+	}
+	
 	@GetMapping(value = "/login")
 	public String getFormLogin(Model model) {
 		return "login.html";

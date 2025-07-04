@@ -15,7 +15,7 @@
 				<h3>Autori:</h3>
 					<ul>
 						<li th:each="autore : ${book.autori}">
-							<a th:href="@{'/author' + '/' + ${autore.id}}" th:text="${autore.nome + ' ' + autore.cognome}">Autore</a>
+							<a th:href="@{'/user/author' + '/' + ${autore.id}}" th:text="${autore.nome + ' ' + autore.cognome}">Autore</a>
 						</li>
 					</ul>
 			</div> 
@@ -38,7 +38,7 @@
 			</div> 
 		</div>
 		<div th:unless="${book}">Non esiste</div>
-		<p><a href="/book">Torna ai libri</a></p>
-		<p><a href="/">Torna alla home</a></p>
+		<p><a href="/user/book">Torna ai libri</a></p>
+		<p><a href="/user">Torna alla home</a></p>
 	</body>
 </html>

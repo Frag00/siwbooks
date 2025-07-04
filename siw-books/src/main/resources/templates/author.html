@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Autore</title>
+	</head>
+	<body> 
+		<div th:if="${user}">
+					<p th:text="${user.nome + ' ' + user.cognome}"></p>
+			  		<p><a href="/logout">Logout</a></p>
+				</div>
+		<div th:if="${author}">
+			<h1 th:text="${author.nome + ' ' + author.cognome}">Nome e cognome</h1>
+			<div>Data di nascita : <span th:text="${author.dataNascita} ">2000</span></div>
+			<div th:if="${author.dataMorte}">Data di morte : <span th:text="${author.dataMorte} ">2000</span></div>
+			<div>Nazionalità : <span th:text="${author.nazionalita} ">Italiana</span></div>
+			<div th:if="${!author.libri.isEmpty()}">
+				<h3>Libri:</h3>
+					<ul>
+						<li th:each="libro : ${author.libri}">
+							<a th:href="@{'/book' + '/' + ${libro.id}}" th:text="${libro.titolo}">Libro</a>
+						</li>
+					</ul>
+			</div> 
+			<div th:if="${author.immagine}">
+			  <div>
+			    <img th:src="${author.immagine.nome}" 
+			         alt="Immagine autore" 
+			         style="max-width: 200px; max-height: 200px; margin: 5px;" />
+			  </div>
+			</div> 
+		</div>
+		<div th:unless="${author}">Non esiste</div>
+		<p><a href="/author">Visualizza tutti gli Autori</a></p>
+		<p><a href="/book">Visualizza tutti i libri</a></p>
+		<p><a href="/">Torna alla home</a></p>
+	</body>
+</html>
