@@ -1,5 +1,13 @@
 package it.uniroma3.siw.repository;
 
-public interface ReviewRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import it.uniroma3.siw.model.Book;
+import it.uniroma3.siw.model.Review;
+import it.uniroma3.siw.model.User;
+
+public interface ReviewRepository extends CrudRepository<Review,Long> {
+
+	public boolean existsByLibroAndUtente(Book b, User u);
 
 }

@@ -23,7 +23,7 @@
 							<h3>Recensioni:</h3>
 								<ul>
 									<li th:each="r : ${book.recensioni}">
-										<span th:utext="${r.titolo + '<br/>' + r.voto + '<br/>' + r.testo + '<br/>' + r.utente}">Recensione</span>
+										<span th:utext="${r.titolo + '<br/>' + r.voto + '<br/>' + r.testo + '<br/>' + r.utente.nome + ' ' + r.utente.cognome}">Recensione</span>
 									</li>
 								</ul>
 						</div>
@@ -37,6 +37,7 @@
 			  </div>
 			</div> 
 		</div>
+		<div><a th:href="@{'/user/book/' + ${book.id} + '/formNewReview'}">Aggiungi una recensione</a></div>
 		<div th:unless="${book}">Non esiste</div>
 		<p><a href="/user/book">Torna ai libri</a></p>
 		<p><a href="/user">Torna alla home</a></p>

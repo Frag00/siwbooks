@@ -26,11 +26,9 @@ public class Review {
 	private String testo;
 	
 	@ManyToOne
-	@NotNull
 	private Book libro;
 	
 	@ManyToOne
-	@NotNull
 	private User utente;
 
 	public Review() {}

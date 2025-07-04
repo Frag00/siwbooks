@@ -78,7 +78,6 @@ public class AuthorController {
 			return "admin/formNewAuthor.html";
 		}
 		else if(bindingResult.hasErrors()) {
-			model.addAttribute("errEsiste","Autore già presente");
 			return "admin/formNewAuthor.html";
 		}
 		else {

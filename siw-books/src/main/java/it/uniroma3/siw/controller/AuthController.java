@@ -3,6 +3,7 @@ package it.uniroma3.siw.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.BookService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.UserService;
+import jakarta.validation.Valid;
 
 @Controller
 public class AuthController {
@@ -49,11 +51,15 @@ public class AuthController {
 	}
 	
 	@PostMapping("/register")
-	public String register(@ModelAttribute("utente") User u,@ModelAttribute("credentials") Credentials c,Model model) {
+	public String register(@Valid @ModelAttribute("utente") User u,BindingResult bindingResultUser,@Valid @ModelAttribute("credentials") Credentials c, BindingResult bindingResultCredentials,Model model) {
 		if(credentialsService.existsByUsername(c.getUsername())) {
 			model.addAttribute("esiste", "utente già presente nel db");
-			return "redirect:/register";
+			return "register.html";
 		}
+		else if (bindingResultUser.hasErrors() || bindingResultCredentials.hasErrors()){
+			return "/register.html";
+		}
+		
 		else {
 		userService.saveUser(u);
 		c.setUtente(u);
