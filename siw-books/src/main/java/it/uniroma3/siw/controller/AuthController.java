@@ -14,6 +14,9 @@ import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.BookService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.UserService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -54,23 +57,24 @@ public class AuthController {
 	public String register(@Valid @ModelAttribute("utente") User u,BindingResult bindingResultUser,@Valid @ModelAttribute("credentials") Credentials c, BindingResult bindingResultCredentials,Model model) {
 		if(credentialsService.existsByUsername(c.getUsername())) {
 			model.addAttribute("esiste", "utente già presente nel db");
+			model.addAttribute("utente",u);
+			model.addAttribute("credentials",c);
 			return "register.html";
 		}
 		else if (bindingResultUser.hasErrors() || bindingResultCredentials.hasErrors()){
-			return "/register.html";
+			model.addAttribute("utente",u);
+			model.addAttribute("credentials",c);
+			return "register.html";
 		}
 		
 		else {
-		userService.saveUser(u);
+			
 		c.setUtente(u);
 		credentialsService.saveCredentials(c);
-		if(credentialsService.getCredentialsByUser(u).equals(c.ruoloAdmin)) {
-			model.addAttribute("books", this.bookService.getAllBooks());
-			return "admin/books.html";
-		}
-		else
-			model.addAttribute("books", this.bookService.getAllBooks());
-			return "user/books.html";
+		
+		// Redirect al login con messaggio di successo
+	    return "redirect:/login?registered=true";
+		
 		}
 	}
 }

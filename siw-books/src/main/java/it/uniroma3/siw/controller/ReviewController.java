@@ -1,6 +1,9 @@
 package it.uniroma3.siw.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -77,6 +80,67 @@ public class ReviewController {
 	
 			return "redirect:/user/book/" + libro.getId();
 		}
+	}
+	
+	@GetMapping("/user/book/{idB}/review/{idR}/remove")
+	public String userDeletesReview(@PathVariable("idB") Long idB,@PathVariable("idR") Long idR, Model model) {
+		
+		User corrente = credentialsService.getCurrentUser();
+		Book libro = bookService.getBookById(idB);
+		
+		
+		Review daEliminare = reviewService.getReviewById(idR).get();
+		
+		
+
+		corrente.getRecensioni().remove(daEliminare);
+		libro.getRecensioni().remove(daEliminare);
+		
+		userService.saveUser(corrente);
+		bookService.saveBook(libro);
+		
+		
+		reviewService.deleteReview(daEliminare);
+		
+		
+		return "redirect:/user/book/" + idB;
+	}
+	
+	@GetMapping("/user/book/{idB}/review/{idR}/formEdit")
+	public String userFormEditsReview(@PathVariable("idB") Long idB , @PathVariable("idR") Long idR , Model model) {
+		
+		Review daEditare = reviewService.getReviewById(idR).get();
+		Review daRiempire = new Review();
+		
+		daRiempire.setId(idR);
+		daRiempire.setTitolo(daEditare.getTitolo());
+		daRiempire.setTesto(daEditare.getTesto());
+		daRiempire.setVoto(daEditare.getVoto());
+		model.addAttribute("review", daRiempire);
+		model.addAttribute("book", bookService.getBookById(idB));
+		return "user/formEditReview.html";
+	}
+	
+	@PostMapping("/user/book/{idB}/review/{idR}/edit")
+	public String userEditsReview(@Valid @ModelAttribute("review") Review r, BindingResult bindingResult, Model model, @PathVariable("idB") Long idB , @PathVariable("idR") Long idR ) {
+		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("review", r);
+			model.addAttribute("book", bookService.getBookById(idB));
+			return "user/formEditReview.html";
+		}
+		
+
+		Review veraReview = reviewService.getReviewById(idR).get();
+		
+		veraReview.setTitolo(r.getTitolo());
+		veraReview.setTesto(r.getTesto());
+		veraReview.setVoto(r.getVoto());
+		
+		reviewService.saveReview(veraReview);
+		
+		
+		return "redirect:/user/book/" + idB;
 	}
 	
 	

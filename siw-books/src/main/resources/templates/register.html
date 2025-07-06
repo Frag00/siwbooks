@@ -7,31 +7,31 @@
   <body>
       <h1><strong>SiwBooks</strong></h1>
 	  <h2>REGISTRAZIONE</h2>
-	  <form th:action="@{/register}" method="post" th:object="${credentials}" >
+	  <form th:action="@{/register}" method="post" autocomplete="off">
 		<div>
 				<span>Nome : </span>
-				<span><input type="text" th:field="${utente.nome}"></span>
-				<span th:if="${#fields.hasErrors('nome')}" th:errors="${utente.nome}"></span>
+				<span><input type="text" th:field="${utente.nome}"  autocomplete="off" /></span>
+				<span th:if="${#fields.hasErrors('utente.nome')}" th:errors="${utente.nome}"></span>
 		</div>
 		<div>
 				<span>Cognome : </span>
-				<span><input type="text" required th:field="${utente.cognome}"></span>
-				<span th:if="${#fields.hasErrors('cognome')}" th:errors="${utente.cognome}"></span>
+				<span><input type="text"  th:field="${utente.cognome}"  autocomplete="off" /></span>
+				<span th:if="${#fields.hasErrors('utente.cognome')}" th:errors="${utente.cognome}"></span>
 		</div>
 		<div>
 				<span>Email : </span>
-				<span><input type="text" required th:field="${utente.email}"></span>
-				<span th:if="${#fields.hasErrors('email')}" th:errors="${utente.email}"></span>
+				<span><input type="text"  th:field="${utente.email}"  autocomplete="off" /></span>
+				<span th:if="${#fields.hasErrors('utente.email')}" th:errors="${utente.email}"></span>
 		</div>
 		<div>
 			<span>Username : </span>
-			<span><input type="text" required th:field="${credentials.username}"></span>
-			<span th:if="${#fields.hasErrors('username')}" th:errors="${credentials.username}"></span>
+			<span><input type="text"  th:field="${credentials.username}"  autocomplete="off" /></span>
+			<span th:if="${#fields.hasErrors('credentials.username')}" th:errors="${credentials.username}"></span>
 		</div>
 		<div>
 			<span>Password : </span>
-			<span><input type="text" required th:field="${credentials.password}"></span>
-			<span th:if="${#fields.hasErrors('password')}" th:errors="${credentials.password}"></span>
+			<span><input type="password"  th:field="${credentials.password}"  autocomplete="off" /></span>
+			<span th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}"></span>
 		</div>
 		<span><button type="submit">Registrati</button></span>
 	  </form>

@@ -1,5 +1,7 @@
 package it.uniroma3.siw.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,13 @@ public class ReviewService {
 	@Transactional
 	public void saveReview(Review r) {
 		reviewRepository.save(r);
+	}
+	
+	public void deleteReview(Review review) {
+		reviewRepository.delete(review);
+	}
+	
+	public Optional<Review> getReviewById(Long id) {
+		return reviewRepository.findById(id);
 	}
 }

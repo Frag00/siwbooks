@@ -19,7 +19,8 @@ public class Credentials {
 	private String username;
 	@NotBlank
 	private String password;
-	@NotBlank
+	
+	
 	private String ruolo;
 	
 	@OneToOne(cascade = CascadeType.ALL)
