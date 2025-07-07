@@ -34,4 +34,9 @@ public class AuthorService {
 	public void saveAuthor(@Valid Author author) {
 		authorRepository.save(author);
 	}
+
+	public void deleteAuthor(Author daRimuovere) {
+		authorRepository.delete(daRimuovere);
+		
+	}
 }

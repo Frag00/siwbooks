@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Author;
+import it.uniroma3.siw.model.Book;
 import it.uniroma3.siw.model.Picture;
+import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.service.AuthorService;
+import it.uniroma3.siw.service.BookService;
 import it.uniroma3.siw.service.PictureService;
 import jakarta.validation.Valid;
 
@@ -28,6 +31,8 @@ public class AuthorController {
 	private AuthorService authorService;
 	@Autowired
 	private PictureService pictureService;
+	@Autowired 
+	private BookService bookService;
 	
 	@GetMapping("/author")
 	public String showAuthors(Model model) {
@@ -69,6 +74,22 @@ public class AuthorController {
 	public String formAuthor(Model model) {
 		model.addAttribute("author",new Author());
 		return "admin/formNewAuthor.html";
+	}
+	
+	@GetMapping("/admin/author/{idA}/remove")
+	public String adminDeletesBook(@PathVariable("idA") Long idA, Model model) {
+		
+		Author daRimuovere = authorService.getAuthorById(idA);
+		
+		for(Book libro : daRimuovere.getLibri()) {
+			libro.getAutori().remove(daRimuovere);
+			bookService.saveBook(libro);
+		}
+		
+		authorService.deleteAuthor(daRimuovere); // a cascata elimina tutte le immagini
+		
+		
+		return "redirect:/admin/author";
 	}
 	
 	@PostMapping("/admin/nuovoAuthor")

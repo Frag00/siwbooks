@@ -143,5 +143,27 @@ public class ReviewController {
 		return "redirect:/user/book/" + idB;
 	}
 	
+	@GetMapping("/admin/book/{idB}/review/{idR}/remove")
+	public String adminDeletesReview(@PathVariable("idB") Long idB,@PathVariable("idR") Long idR, Model model) {
+		
+		Book libro = bookService.getBookById(idB);
+		
+		
+		Review daEliminare = reviewService.getReviewById(idR).get();
+		
+		User proprietarioRecensione = daEliminare.getUtente();
+
+		proprietarioRecensione.getRecensioni().remove(daEliminare);
+		libro.getRecensioni().remove(daEliminare);
+		
+		userService.saveUser(proprietarioRecensione);
+		bookService.saveBook(libro);
+		
+		
+		reviewService.deleteReview(daEliminare);
+		
+		
+		return "redirect:/admin/book/" + idB;
+	}
 	
 }

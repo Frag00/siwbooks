@@ -37,7 +37,7 @@ public class Author {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Picture immagine;
 	
-	@ManyToMany(mappedBy = "autori")
+	@ManyToMany(mappedBy = "autori") // se voglio che eliminato l'autore vengano eliminati anche i suoi libri devo mettere il cascade, nel progetto suppongo di no
 	private Set<Book> libri;
 
 	public Author() {}

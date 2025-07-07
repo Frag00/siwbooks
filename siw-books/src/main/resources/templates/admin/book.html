@@ -23,7 +23,8 @@
 							<h3>Recensioni:</h3>
 								<ul>
 									<li th:each="r : ${book.recensioni}">
-										<span th:utext="${r.titolo + '<br/>' + r.voto + '<br/>' + r.testo + '<br/>' + r.utente}">Recensione</span>
+										<span th:utext="${r.titolo + '<br/>' + r.voto + '<br/>' + r.testo + '<br/>' + r.utente.nome + ' ' +  r.utente.cognome}">Recensione</span>
+										<p><a th:href="@{'/admin/book/' + ${book.id} + '/review/' + ${r.id} + '/remove'}">Elimina </a></p>
 									</li>
 								</ul>
 						</div>
@@ -38,6 +39,7 @@
 			</div> 
 		</div>
 		<div th:unless="${book}">Non esiste</div>
+		<p> <a th:href="@{'/admin/book/' + ${book.id} + '/remove'}">Elimina Libro</a> </p>
 		<p><a href="/admin/book">Torna ai libri</a></p>
 		<p><a href="/admin">Torna alla home</a></p>
 	</body>

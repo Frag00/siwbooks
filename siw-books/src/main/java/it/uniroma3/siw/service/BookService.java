@@ -26,4 +26,9 @@ public class BookService {
 	public boolean existsByTitoloAndAnno(Book book) {
 		return this.bookRepository.existsByTitoloAndAnnoPubblicazione(book.getTitolo(), book.getAnnoPubblicazione());
 	}
+
+	public void deleteBook(Book daRimuovere) {
+		bookRepository.delete(daRimuovere);
+		
+	}
 }

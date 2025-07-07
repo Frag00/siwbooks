@@ -24,10 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Book;
 import it.uniroma3.siw.model.Picture;
+import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.model.Author;
 import it.uniroma3.siw.service.AuthorService;
 import it.uniroma3.siw.service.BookService;
 import it.uniroma3.siw.service.PictureService;
+import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
 
 @Controller
@@ -38,6 +40,8 @@ public class BookController {
 	@Autowired AuthorService authorService;
 	
 	@Autowired PictureService pictureService;
+	
+	@Autowired UserService userService;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -86,6 +90,28 @@ public class BookController {
 		model.addAttribute("authors",authorService.getAllAuthors());
 		return "admin/formNewBook.html";
 	}
+	
+	@GetMapping("/admin/book/{idB}/remove")
+	public String adminDeletesBook(@PathVariable("idB") Long idB, Model model) {
+		
+		Book daRimuovere = bookService.getBookById(idB);
+		
+		for(Author autore : daRimuovere.getAutori()) {
+			autore.getLibri().remove(daRimuovere);
+			authorService.saveAuthor(autore);
+		}
+		
+		for(Review r : daRimuovere.getRecensioni()) {
+			r.getUtente().getRecensioni().remove(r);
+			userService.saveUser(r.getUtente());
+		}
+		
+		bookService.deleteBook(daRimuovere); // a  cascata vengono rimosse tutte le immagini del libro e le recensioni
+		
+		return "redirect:/admin/book";
+	}
+	
+	
 	
 	@PostMapping("/pippo")
 	public String addBook(@Valid @ModelAttribute("book") Book book,BindingResult bindingResult,@RequestParam(value = "autori", required = false) List<Long> autoriIds,@RequestParam("imageFiles") MultipartFile[] imageFiles,Model model) {

@@ -14,6 +14,7 @@
 		 	<li th:each="book : ${books}">
 		 		<a th:href="@{'/admin/book' + '/' + ${book.id}}"
 		 		th:text="${book.titolo}">titolo</a>
+				<a th:href="@{'/admin/book/' + ${book.id} + '/remove'}">Elimina</a>
 		 	</li>
 		 </ul> 
 		 <p><a href="/admin/formNewBook">Aggiungi nuovo libro </a></p>
