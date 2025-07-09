@@ -133,4 +133,80 @@ public class AuthorController {
 	}
  }
 	
+	@GetMapping("/admin/author/{idA}/formEditAuthor")
+	public String showAdminFormEditAuthor(@PathVariable("idA") Long idA ,Model model) {
+		
+		Author daModificare = authorService.getAuthorById(idA);
+		Author fittizio = new Author();
+		
+		fittizio.setNome(daModificare.getNome());
+		fittizio.setCognome(daModificare.getCognome());
+		fittizio.setDataNascita(daModificare.getDataNascita());
+		fittizio.setDataMorte(daModificare.getDataMorte());
+		fittizio.setId(daModificare.getId());
+		fittizio.setImmagine(daModificare.getImmagine());
+		fittizio.setNazionalita(daModificare.getNazionalita());
+		
+		model.addAttribute("author",fittizio);
+		
+		return "admin/formEditAuthor";
+	}
+	
+	@PostMapping("/admin/author/{idA}/edit")
+	public String adminEditsAuthor(@Valid @ModelAttribute("author") Author author,BindingResult bindingResult, @RequestParam("imageFile") MultipartFile imageFile ,@PathVariable("idA") Long idA,Model model) {
+		if(this.authorService.existsByNomeAndCognomeAndDataNascita(author)) {
+			model.addAttribute("errEsiste","Autore già presente");
+			author.setId(idA);
+			model.addAttribute("author", author);
+			return "admin/formEditAuthor.html";
+		}
+		else if(bindingResult.hasErrors()) {
+			author.setId(idA);
+			model.addAttribute("author", author);
+			return "admin/formEditAuthor.html";
+		}
+		else {
+		
+			/* gestione delle immagini */
+	        
+	        if(imageFile==null) {
+	        	model.addAttribute("msgError", "Inserire una foto");
+	        	author.setId(idA);
+	        	model.addAttribute("author",author);
+	            return "admin/formEditAuthor.html";
+	        }
+
+	        try {
+	            // Gestione immagini
+	               	String name = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
+	                Picture img = new Picture(name);
+	                this.pictureService.savePhysicalImage(imageFile.getBytes(), name);	               	               
+	        // Associamo la foto all'autore
+	        author.setImmagine(img);
+	        
+		Author veroA = authorService.getAuthorById(idA);
+		
+		veroA.setNome(author.getNome());
+		veroA.setCognome(author.getCognome());
+		veroA.setDataMorte(author.getDataMorte());
+		veroA.setDataNascita(author.getDataNascita());
+		veroA.setImmagine(author.getImmagine());
+		veroA.setNazionalita(author.getNazionalita());
+		
+
+		authorService.saveAuthor(veroA);
+		model.addAttribute("author", veroA);
+		return "redirect:/admin/author/"+ idA;
+		}
+	        catch (Exception e) {
+	            model.addAttribute("msgError", "Errore nel salvataggio dell'autore:\n"+ e.toString());
+	            author.setId(idA);
+	            model.addAttribute("author", author);
+	            return "admin/formNewAuthor.html";
+	        }
+		
+	}
+ }
+	
+	
 }

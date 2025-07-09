@@ -31,6 +31,7 @@
 		</div>
 		<div th:unless="${author}">Non esiste</div>
 		<p><a th:href="@{'/admin/author/' + ${author.id} + '/remove'}">Elimina</a></p>
+		<p><a th:href="@{'/admin/author/' + ${author.id} + '/formEditAuthor'}">Modifica</a></p>
 		<p><a href="/admin/author">Visualizza tutti gli Autori</a></p>
 		<p><a href="/admin/book">Visualizza tutti i Libri</a></p>
 		<p><a href="/admin">Torna alla home</a></p>

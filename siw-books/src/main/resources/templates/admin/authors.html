@@ -15,8 +15,10 @@
 		 		<a th:href="@{'/admin/author' + '/' + ${author.id}}"
 		 		th:text="${author.nome + ' ' + author.cognome}">nome e cognome</a>
 				<a th:href="@{'/admin/author/' + ${author.id} + '/remove'}">Elimina</a>
+				<a th:href="@{'/admin/author/' + ${author.id} + '/formEditAuthor'}">Modifica</a>
 		 	</li>
 		 </ul>
+		 <p><a href="/admin/formNewAuthor">Aggiungi nuovo autore </a></p>
 		 <p><a href="/admin">Torna alla home</a></p>
 	 </body>
 </html>

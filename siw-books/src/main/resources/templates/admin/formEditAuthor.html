@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
  <head> 
-	 <title>New Author</title>
+	 <title>Edit Author</title>
  </head>
  <body>	
  <div th:if="${user}">
 			<p th:text="${user.nome + ' ' + user.cognome}"></p>
 	  		<p><a href="/logout">Logout</a></p>
 		</div>
-	 <h1>Aggiungi un autore</h1>
-	 <form th:action="@{/admin/nuovoAuthor}" method="POST" th:object="${author}" enctype="multipart/form-data">
+	 <h1>Modifica l'autore</h1>
+	 <form th:action="@{/admin/author/{idA}/edit(idA=${author.id})}" method="POST" th:object="${author}" enctype="multipart/form-data">
 		<div th:if="${errEsiste}">
-		 	<p th:text="${errEsiste}"></p>
-		</div>
+				 	<p th:text="${errEsiste}"></p>
+				</div>
 		<div>
 		 Nome: <span><input type="text" th:field="${author.nome}"/></span>
 		 <span th:if="${#fields.hasErrors('nome')}" th:errors="${author.nome}"></span>
@@ -44,7 +44,7 @@
 		 <div th:if="${msgError}"><span th:text="${msgError}"></span>
 		 </div>
 		 <div>
-		 <span><button type="submit">Aggiungi</button></span>
+		 <span><button type="submit">Conferma</button></span>
 		 </div>
 		 
 	 </form>

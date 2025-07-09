@@ -15,6 +15,7 @@
 		 		<a th:href="@{'/admin/book' + '/' + ${book.id}}"
 		 		th:text="${book.titolo}">titolo</a>
 				<a th:href="@{'/admin/book/' + ${book.id} + '/remove'}">Elimina</a>
+				<a th:href="@{'/admin/book/' + ${book.id} + '/formEditBook'}">Modifica</a>
 		 	</li>
 		 </ul> 
 		 <p><a href="/admin/formNewBook">Aggiungi nuovo libro </a></p>

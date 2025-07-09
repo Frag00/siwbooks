@@ -165,7 +165,7 @@ public class BookController {
 	        
 		this.bookService.saveBook(book);
 		model.addAttribute("book",book);
-		return "redirect:admin/book/"+book.getId();
+		return "redirect:/admin/book/"+book.getId();
 	      }
 	        
 	        catch (Exception e) {
@@ -175,4 +175,96 @@ public class BookController {
 	        }
 		}
 	}
+	
+	@GetMapping("/admin/book/{idB}/formEditBook")
+	public String showAdminFormEditBook(@PathVariable("idB") Long idB,Model model) {
+		
+		Book dM = bookService.getBookById(idB);
+		Book dR = new Book();
+		
+		dR.setId(idB);
+		dR.setAnnoPubblicazione(dM.getAnnoPubblicazione());
+		dR.setImmagini(dM.getImmagini());
+		dR.setTitolo(dM.getTitolo());
+		dR.setAutori(dM.getAutori());
+		
+		model.addAttribute("authors",authorService.getAllAuthors());
+		model.addAttribute("book",dR);
+		return "admin/formEditBook.html";
+	}
+	
+	@PostMapping("/admin/book/{idB}/edit")
+	public String adminEditsBook(@Valid @ModelAttribute("book") Book book,BindingResult bindingResult,@RequestParam(value = "autori", required = false) List<Long> autoriIds,@RequestParam("imageFiles") MultipartFile[] imageFiles,@PathVariable("idB") Long idB,Model model) {
+		if(this.bookService.existsByTitoloAndAnno(book)) {
+			model.addAttribute("errEsiste","Libro già presente");
+			model.addAttribute("authors",authorService.getAllAuthors());
+			return "admin/formEditBook.html";
+		}
+		else if(bindingResult.hasErrors()) {
+			model.addAttribute("authors",authorService.getAllAuthors());
+			book.setId(idB);
+			model.addAttribute("book",book);
+			return "admin/formEditBook.html";
+		}
+		
+		else {
+	        if (autoriIds != null && !autoriIds.isEmpty()) {
+	            Set<Author> autoriSelezionati = new HashSet<>();
+	            for (Long autorId : autoriIds) {
+	                Author author = authorService.getAuthorById(autorId);
+	                if (author != null) {
+	                    autoriSelezionati.add(author);     
+	                    author.getLibri().add(book);
+	                }
+	            }
+	            book.setAutori(autoriSelezionati);
+	        }
+	        
+	        /* gestione delle immagini */
+	        
+	        if(imageFiles.length == 0 || (imageFiles.length == 1 && imageFiles[0].isEmpty())) {
+	        	model.addAttribute("msgError", "Inserire almeno una foto");
+	        	book.setId(idB);
+	        	model.addAttribute("book",book);
+	        	model.addAttribute("authors",authorService.getAllAuthors());
+	            return "admin/formEditBook.html";
+	        }
+
+	        try {
+	            // Gestione immagini
+	            Set<Picture> images = new HashSet<Picture>();
+	            for (MultipartFile file : imageFiles) {
+	                if (!file.isEmpty()) {
+	                	String name = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+	                    Picture img = new Picture(name);
+	                    this.pictureService.savePhysicalImage(file.getBytes(), name);
+	                    images.add(img);
+	                }
+	            }
+
+	        // Associamo le immagini al libro
+	        book.setImmagini(images);
+	      
+	    Book b = bookService.getBookById(idB);
+	    
+	    b.setAnnoPubblicazione(book.getAnnoPubblicazione());
+		b.setImmagini(book.getImmagini());
+		b.setTitolo(book.getTitolo());
+		b.setAutori(book.getAutori());
+	        
+		this.bookService.saveBook(b);
+		model.addAttribute("book",b);
+		return "redirect:/admin/book/"+ idB;
+	      }
+	        
+	        catch (Exception e) {
+	            model.addAttribute("msgError", "Errore nel salvataggio del libro:\n"+ e.toString());
+	            model.addAttribute("authors",authorService.getAllAuthors());
+	            book.setId(idB);
+	            model.addAttribute("book",book);
+	            return "admin/formEditBook.html";
+	        }
+		}
+	}
+	
 }

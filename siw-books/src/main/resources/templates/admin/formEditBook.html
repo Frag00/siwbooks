@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
  <head>
-	 <title>New Book</title>
+	 <title>Edit Book</title>
  </head>
  <body>	
 	<div th:if="${user}">
 				<p th:text="${user.nome + ' ' + user.cognome}"></p>
 		  		<p><a href="/logout">Logout</a></p>
 			</div>
-	 <h1>Aggiungi un libro</h1>
-	 <form th:action="@{/pippo}" method="POST" th:object="${book}" enctype="multipart/form-data">
+	 <h1>Modifica il libro</h1>
+	 <form th:action="@{/admin/book/{idB}/edit(idB=${book.id})}" method="POST" th:object="${book}" enctype="multipart/form-data">
 		<div th:if="${errEsiste}">
 		 	<p th:text="${errEsiste}"></p>
 		</div>
@@ -42,7 +42,7 @@
 		 	                   required/>
 		 </div>
 		 <div>
-		 <span><button type="submit">Aggiungi</button></span>
+		 <span><button type="submit">Conferma</button></span>
 		 </div>
 		 
 	 </form>

@@ -31,4 +31,7 @@ public class ReviewService {
 	public Optional<Review> getReviewById(Long id) {
 		return reviewRepository.findById(id);
 	}
+	public Iterable<Review> getAllReviews() {
+		return reviewRepository.findAll();
+	}
 }

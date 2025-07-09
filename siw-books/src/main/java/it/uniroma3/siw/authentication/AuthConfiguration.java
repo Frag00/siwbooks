@@ -75,7 +75,7 @@ public class AuthConfiguration {
 						response.sendRedirect(idUtente != null ? "/admin": "/login");
 					} else {
 						// Se Utente, redirect utente (sostituisci idUtente)
-						response.sendRedirect(idUtente != null ? "/user" : "/login");
+						response.sendRedirect(idUtente != null ? "/user/profile" : "/login");
 					}
 				}).failureUrl("/login?error=true").permitAll().and().logout().logoutUrl("/logout")
 				.logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID")
