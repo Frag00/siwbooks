@@ -1,0 +1,376 @@
+/* Import Google Fonts - Poppins for modern look */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevents horizontal scroll */
+    display: flex;
+    flex-direction: column; /* For sticky footer */
+}
+
+/* Animated Background Elements */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: -1; /* Ensures it stays behind content */
+    animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Navbar */
+.navbar {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+    backdrop-filter: blur(20px); /* Frosted glass effect */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    transition: all 0.3s ease;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px; /* Horizontal padding */
+    width: 100%;
+}
+
+.navbar-brand .logo {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #667eea, #764ba2); /* Gradient text */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.user-actions {
+    display: flex;
+    gap: 15px; /* Spazio tra i bottoni Logout e Profilo */
+    margin: 0;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+/* General Button Styles */
+.btn {
+    padding: 10px 25px;
+    border-radius: 30px; /* Pill shape */
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-login {
+    background: linear-gradient(45deg, #3498db, #2980b9); /* Blue gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-register {
+    background: linear-gradient(45deg, #2ecc71, #27ae60); /* Green gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+}
+
+.btn-logout {
+    background: linear-gradient(45deg, #e74c3c, #c0392b); /* Red gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-profile {
+    background: linear-gradient(45deg, #f39c12, #e67e22); /* Orange gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.btn-icon {
+    font-size: 1.2em; /* Adjust icon size relative to text */
+}
+
+/* Specific Styles for Admin Index Page */
+.admin-index-main {
+    flex-grow: 1;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white; /* Text color for main titles */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeInDown 0.8s ease-out forwards;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome-title {
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    background: linear-gradient(45deg, #ffffff, #e0e0e0); /* White-ish gradient for main title */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 1px;
+}
+
+.welcome-subtitle {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.5px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    width: 100%;
+    justify-content: center;
+}
+
+.dashboard-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    color: #2c3e50;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(0); /* Initial state for animation */
+    opacity: 0; /* Initial state for animation */
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.dashboard-card:nth-child(1) { animation-delay: 0.1s; }
+.dashboard-card:nth-child(2) { animation-delay: 0.2s; }
+/* Add more delays for more cards */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.dashboard-card:hover {
+    transform: translateY(-8px) scale(1.02); /* Lift and slight enlarge effect */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.card-icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    background: linear-gradient(45deg, #667eea, #764ba2); /* Icon gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #34495e;
+}
+
+.card-description {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Specific card colors/gradients */
+.dashboard-card.card-books .card-icon {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d); /* Teal gradient for books */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.dashboard-card.card-authors .card-icon {
+    background: linear-gradient(45deg, #f39c12, #e67e22); /* Orange gradient for authors */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.dashboard-card.card-users .card-icon {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad); /* Purple gradient for users */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* Footer (consistent with other pages) */
+.footer {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: auto;
+    width: 100%;
+    backdrop-filter: blur(10px);
+}
+
+.footer p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 0 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .navbar-brand .logo {
+        font-size: 1.5rem;
+    }
+
+    .admin-index-main {
+        padding: 0 20px;
+        margin-top: 30px;
+    }
+
+    .welcome-title {
+        font-size: 3.5rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 1.4rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+    }
+
+    .dashboard-card {
+        padding: 25px;
+    }
+
+    .card-icon {
+        font-size: 3.5rem;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+
+    .card-description {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-title {
+        font-size: 2.8rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .dashboard-card {
+        padding: 20px;
+    }
+
+    .card-icon {
+        font-size: 3rem;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+    }
+}

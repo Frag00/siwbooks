@@ -1,25 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 	 <head>
-		 <title>Autori</title>
+		 <meta charset="UTF-8" />
+		 <title>Tutti gli Autori - Gestione Admin - SiwBooks</title>
+		 <link rel="stylesheet" href="/css/admin/stylesAuthors.css" />
 	 </head>
-	 <body>
-		<div th:if="${user}">
-					<p th:text="${user.nome + ' ' + user.cognome}"></p>
-			  		<p><a href="/logout">Logout</a></p>
-					<p><a th:href="@{/admin/profile}">Profilo</a></p>
+	 <body class="authors-admin-body">
+		<nav class="navbar">
+			<div class="navbar-container">
+				<div class="navbar-brand">
+					<h1 class="logo"><strong>SiwBooks</strong></h1>
 				</div>
-		 <h1>Tutti gli Autori</h1>
-		 <div th:if="${authors.isEmpty()}">Non ci sono autori nel sistema</div>
-		 <ul>
-		 	<li th:each="author : ${authors}">
-		 		<a th:href="@{'/admin/author' + '/' + ${author.id}}"
-		 		th:text="${author.nome + ' ' + author.cognome}">nome e cognome</a>
-				<a th:href="@{'/admin/author/' + ${author.id} + '/remove'}">Elimina</a>
-				<a th:href="@{'/admin/author/' + ${author.id} + '/formEditAuthor'}">Modifica</a>
-		 	</li>
-		 </ul>
-		 <p><a href="/admin/formNewAuthor">Aggiungi nuovo autore </a></p>
-		 <p><a href="/admin">Torna alla home</a></p>
+				<div class="navbar-nav">
+					<div th:if="${user}" class="user-info">
+						<p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+						<p class="user-actions">
+							<a th:href="@{/admin/profile}" class="btn btn-profile">
+								<span class="btn-icon">👤</span>
+								Profilo Admin
+							</a>
+							<a href="/logout" class="btn btn-logout">
+								<span class="btn-icon">🚪</span>
+								Logout
+							</a>
+						</p>
+					</div>
+					<div th:unless="${user}" class="auth-buttons">
+						<span><a href="/login" class="btn btn-login">Accedi</a></span>
+						<span><a href="/register" class="btn btn-register">Registrati</a></span>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<main class="authors-admin-main">
+			<div class="page-header">
+				<h1 class="page-title">Tutti gli Autori</h1>
+			</div>
+
+			<div th:if="${authors.isEmpty()}" class="info-message-card">
+				<p>Non ci sono autori nel sistema</p>
+			</div>
+			
+			<div th:unless="${authors.isEmpty()}" class="authors-grid-container">
+				<ul class="authors-list-grid">
+					<li th:each="author : ${authors}" class="author-card-item">
+						<div class="author-info">
+							<h3 class="author-name">
+								<a th:href="@{'/admin/author' + '/' + ${author.id}}"
+								th:text="${author.nome + ' ' + author.cognome}">nome e cognome</a>
+							</h3>
+						</div>
+						<div class="author-actions">
+							<a th:href="@{'/admin/author/' + ${author.id} + '/formEditAuthor'}" class="btn btn-edit">
+								<span class="btn-icon">✏️</span>
+								Modifica
+							</a>
+							<a th:href="@{'/admin/author/' + ${author.id} + '/remove'}" class="btn btn-delete">
+								<span class="btn-icon">🗑️</span>
+								Elimina
+							</a>
+						</div>
+					</li>
+				</ul> 
+			</div>
+			
+			<div class="action-buttons-group">
+				<a href="/admin/formNewAuthor" class="btn btn-add-author">
+					<span class="btn-icon">➕</span>
+					Aggiungi nuovo autore 
+				</a>
+			</div>
+
+			<div class="back-link-home">
+				<a href="/admin" class="btn btn-home">
+					<span class="btn-icon">🏠</span>
+					Torna alla home
+				</a>
+			</div>
+		</main>
+
+		<footer class="footer">
+			<p>SiwBooks - Biblioteca digitale</p>
+		</footer>
 	 </body>
 </html>

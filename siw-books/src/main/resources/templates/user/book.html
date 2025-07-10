@@ -1,50 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 	<head>
-		<title>Libro</title>
+		<meta charset="UTF-8" />
+		<title th:text="${book} ? ${book.titolo + ' - SiwBooks'} : 'Libro non trovato - SiwBooks'">Libro - SiwBooks</title>
+		<link rel="stylesheet" href="/css/user/stylesBook.css" />
 	</head>
-	<body> 
-		<div th:if="${user}">
-					<p th:text="${user.nome + ' ' + user.cognome}"></p>
-			  		<p><a href="/logout">Logout</a></p>
-					<p><a th:href="@{/user/profile}">Profilo</a></p>
+	<body class="book-detail-body">
+		<nav class="navbar">
+			<div class="navbar-container">
+				<div class="navbar-brand">
+					<h1 class="logo"><strong>SiwBooks</strong></h1>
 				</div>
-		<div th:if="${book}">
-			<h1 th:text="${book.titolo}">Titolo Libro</h1>
-			<div>Anno di pubblicazione: <span th:text="${book.annoPubblicazione} ">2000</span></div>
-			<div th:if="${!book.autori.isEmpty()}">
-				<h3>Autori:</h3>
-					<ul>
-						<li th:each="autore : ${book.autori}">
-							<a th:href="@{'/user/author' + '/' + ${autore.id}}" th:text="${autore.nome + ' ' + autore.cognome}">Autore</a>
-						</li>
-					</ul>
-			</div> 
-			<div th:if="${!book.recensioni.isEmpty()}">
-							<h3>Recensioni:</h3>
-								<ul>
-									<li th:each="r : ${book.recensioni}">
-										<span th:utext="${r.titolo + '<br/>' + r.voto + '<br/>' + r.testo + '<br/>' + r.utente.nome + ' ' + r.utente.cognome}">Recensione</span>
-										<div th:if="${r.utente.id == user.id}">
-											<a th:href="@{'/user/book/' + ${book.id} + '/review/' + ${r.id} + '/remove'}">Elimina </a>
-											<a th:href="@{'/user/book/' + ${book.id} + '/review/' + ${r.id} + '/formEdit'}">Modifica </a>
-										</div>
-									</li>
-								</ul>
+				<div class="navbar-nav">
+					<div th:if="${user}" class="user-info">
+						<p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+						<p class="user-actions">
+							<a th:href="@{/user/profile}" class="btn btn-profile">
+								<span class="btn-icon">👤</span>
+								Profilo
+							</a>
+							<a href="/logout" class="btn btn-logout">
+								<span class="btn-icon">🚪</span>
+								Logout
+							</a>
+						</p>
+					</div>
+					<div th:unless="${user}" class="auth-buttons">
+						<span><a href="/login" class="btn btn-login">Accedi</a></span>
+						<span><a href="/register" class="btn btn-register">Registrati</a></span>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<main class="book-detail-main">
+			<div th:if="${book}" class="book-detail-card">
+				<h1 class="book-detail-title" th:text="${book.titolo}">Titolo Libro</h1>
+
+				<div class="book-info-section">
+					<p class="book-detail-item"><span class="info-label">Anno di pubblicazione:</span> <span th:text="${book.annoPubblicazione}">2000</span></p>
+
+					<div th:if="${!book.autori.isEmpty()}" class="authors-section">
+						<h3 class="section-title">Autori:</h3>
+						<ul class="authors-list">
+							<li th:each="autore : ${book.autori}" class="author-item">
+								<a th:href="@{'/user/author' + '/' + ${autore.id}}" th:text="${autore.nome + ' ' + autore.cognome}" class="author-link">Autore</a>
+							</li>
+						</ul>
+					</div>
+
+					<div th:if="${!book.immagini.isEmpty()}" class="book-images-section">
+						<h3 class="section-title">Immagini:</h3>
+						<div class="image-gallery">
+							<img th:each="img : ${book.immagini}"
+								 th:src="${img.nome}"
+								 alt="Immagine libro"
+								 class="book-image" />
 						</div>
-			<div th:if="${!book.immagini.isEmpty()}">
-			  <h3>Immagini:</h3>
-			  <div>
-			    <img th:each="img : ${book.immagini}" 
-			         th:src="${img.nome}" 
-			         alt="Immagine libro" 
-			         style="max-width: 200px; max-height: 200px; margin: 5px;" />
-			  </div>
-			</div> 
-		</div>
-		<div><a th:href="@{'/user/book/' + ${book.id} + '/formNewReview'}">Aggiungi una recensione</a></div>
-		<div th:unless="${book}">Non esiste</div>
-		<p><a href="/user/book">Torna ai libri</a></p>
-		<p><a href="/user">Torna alla home</a></p>
+					</div>
+
+					<div th:if="${!book.recensioni.isEmpty()}" class="reviews-section">
+						<h3 class="section-title">Recensioni:</h3>
+						<ul class="reviews-list">
+							<li th:each="r : ${book.recensioni}" class="review-item">
+								<div class="review-header">
+									<h4 class="review-title" th:text="${r.titolo}">Titolo Recensione</h4>
+									<span class="review-rating" th:text="${r.voto + '/5'}">Voto</span>
+								</div>
+								<p class="review-text" th:text="${r.testo}">Testo recensione</p>
+								<p class="review-author">Recensito da: <span th:text="${r.utente.nome + ' ' + r.utente.cognome}">Nome Utente</span></p>
+
+								<div th:if="${r.utente.id == user.id}" class="review-actions">
+									<a th:href="@{'/user/book/' + ${book.id} + '/review/' + ${r.id} + '/remove'}" class="btn btn-danger btn-sm">Elimina</a>
+									<a th:href="@{'/user/book/' + ${book.id} + '/review/' + ${r.id} + '/formEdit'}" class="btn btn-warning btn-sm">Modifica</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="add-review-button">
+					<a th:href="@{'/user/book/' + ${book.id} + '/formNewReview'}" class="btn btn-success">
+						<span class="btn-icon">✍️</span>
+						Aggiungi una recensione
+					</a>
+				</div>
+			</div>
+
+			<div th:unless="${book}" class="no-content-message">
+				<p>Il libro richiesto non esiste nel sistema.</p>
+			</div>
+
+			<div class="action-buttons">
+				<a href="/user/book" class="btn btn-secondary">
+					<span class="btn-icon">📚</span>
+					Torna a tutti i libri
+				</a>
+				<a href="/user" class="btn btn-home">
+					<span class="btn-icon">🏠</span>
+					Torna alla home
+				</a>
+			</div>
+		</main>
+
+		<footer class="footer">
+			<p>SiwBooks - Biblioteca digitale</p>
+		</footer>
 	</body>
 </html>

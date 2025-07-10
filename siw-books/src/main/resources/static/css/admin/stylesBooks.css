@@ -1,0 +1,450 @@
+/* Import Google Fonts - Poppins for modern look */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevents horizontal scroll */
+    display: flex;
+    flex-direction: column; /* For sticky footer */
+}
+
+/* Animated Background Elements */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: -1; /* Ensures it stays behind content */
+    animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Navbar */
+.navbar {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+    backdrop-filter: blur(20px); /* Frosted glass effect */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    transition: all 0.3s ease;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px; /* Horizontal padding */
+    width: 100%;
+}
+
+.navbar-brand .logo {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #667eea, #764ba2); /* Gradient text */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.user-actions {
+    display: flex;
+    gap: 15px; /* Spazio tra i bottoni Logout e Profilo */
+    margin: 0;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+/* General Button Styles */
+.btn {
+    padding: 10px 25px;
+    border-radius: 30px; /* Pill shape */
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-login {
+    background: linear-gradient(45deg, #3498db, #2980b9); /* Blue gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-register {
+    background: linear-gradient(45deg, #2ecc71, #27ae60); /* Green gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+}
+
+.btn-logout {
+    background: linear-gradient(45deg, #e74c3c, #c0392b); /* Red gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-profile {
+    background: linear-gradient(45deg, #f39c12, #e67e22); /* Orange gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.btn-icon {
+    font-size: 1.2em; /* Adjust icon size relative to text */
+}
+
+/* Specific Styles for Books Admin Page */
+.books-admin-main {
+    flex-grow: 1;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white; /* Text color for main titles */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page-title {
+    font-size: 3.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: white;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.info-message-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 1.2rem;
+    color: #34495e;
+    max-width: 600px;
+    margin-bottom: 40px;
+    animation: fadeInScale 0.6s ease-out forwards;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.books-grid-container {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.books-list-grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    justify-content: center;
+}
+
+.book-card-item {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 120px; /* Ensure consistent height */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+.book-card-item:nth-child(1) { animation-delay: 0.1s; }
+.book-card-item:nth-child(2) { animation-delay: 0.2s; }
+.book-card-item:nth-child(3) { animation-delay: 0.3s; }
+/* Add more delays if you expect many items */
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.book-card-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.book-info {
+    margin-bottom: 15px;
+}
+
+.book-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.book-title a {
+    text-decoration: none;
+    color: #2c3e50; /* Dark text for name */
+    transition: color 0.2s ease;
+}
+
+.book-title a:hover {
+    color: #667eea; /* Primary color on hover */
+}
+
+.book-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end; /* Align buttons to the right */
+    flex-wrap: wrap; /* Allow buttons to wrap */
+}
+
+.btn-edit {
+    background: linear-gradient(45deg, #f39c12, #e67e22); /* Orange gradient */
+    color: white;
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+
+.btn-delete {
+    background: linear-gradient(45deg, #e74c3c, #c0392b); /* Red gradient */
+    color: white;
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-edit:hover, .btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.action-buttons-group {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-add-book {
+    background: linear-gradient(45deg, #2ecc71, #27ae60); /* Green gradient for books */
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
+}
+
+.btn-add-author {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad); /* Purple gradient for authors */
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4);
+}
+
+
+.btn-add-book:hover, .btn-add-author:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.back-link-home {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-home {
+    background: linear-gradient(45deg, #3498db, #2980b9); /* Blue gradient for home */
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+
+.btn-home:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer (consistent with other pages) */
+.footer {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: auto;
+    width: 100%;
+    backdrop-filter: blur(10px);
+}
+
+.footer p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 0 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .navbar-brand .logo {
+        font-size: 1.5rem;
+    }
+
+    .books-admin-main {
+        padding: 0 20px;
+        margin-top: 30px;
+    }
+
+    .page-title {
+        font-size: 3rem;
+    }
+
+    .info-message-card {
+        font-size: 1.1rem;
+        padding: 25px;
+    }
+
+    .books-list-grid {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+    }
+
+    .book-card-item {
+        padding: 20px;
+        min-height: unset; /* Remove min-height for mobile stacking */
+    }
+
+    .book-title {
+        font-size: 1.4rem;
+    }
+
+    .book-actions {
+        flex-direction: column; /* Stack action buttons */
+        gap: 10px;
+    }
+    .btn-edit, .btn-delete {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        padding: 10px 15px;
+        font-size: 0.85rem;
+    }
+
+    .action-buttons-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .btn-add-book, .btn-add-author {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+
+    .btn-home {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 2.5rem;
+    }
+    .info-message-card {
+        padding: 20px;
+        font-size: 1rem;
+    }
+    .book-title {
+        font-size: 1.2rem;
+    }
+}

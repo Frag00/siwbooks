@@ -1,35 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
   <head>
-    <title>Modifica Profilo</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <title>Modifica Profilo - SiwBooks</title>
+    <link rel="stylesheet" href="/css/user/stylesEditProfile.css" />
   </head>
-  <body>
-	<div th:if="${user}">
-				<p th:text="${user.nome + ' ' + user.cognome}"></p>
-		  		<p><a href="/logout">Logout</a></p>
-				<p><a th:href="@{/user/profile}">Profilo</a></p>
-			</div>
-      <h1><strong>Modifica Informazioni del Profilo</strong></h1>
+  <body class="edit-profile-body">
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <h1 class="logo"><strong>SiwBooks</strong></h1>
+        </div>
+        <div class="navbar-nav">
+          <div th:if="${user}" class="user-info">
+            <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+            <p class="user-actions">
+              <a th:href="@{/user/profile}" class="btn btn-profile">
+                <span class="btn-icon">👤</span>
+                Profilo
+              </a>
+              <a href="/logout" class="btn btn-logout">
+                <span class="btn-icon">🚪</span>
+                Logout
+              </a>
+            </p>
+          </div>
+          <div th:unless="${user}" class="auth-buttons">
+            <span><a href="/login" class="btn btn-login">Accedi</a></span>
+            <span><a href="/register" class="btn btn-register">Registrati</a></span>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-	<form th:action="@{/user/profile/changeProfile}" method="post" autocomplete="off">
-			<div>
-					<span>Nome : </span>
-					<span><input type="text" th:field="${user.nome}"  autocomplete="off" /></span>
-					<span th:if="${#fields.hasErrors('user.nome')}" th:errors="${user.nome}"></span>
-			</div>
-			<div>
-					<span>Cognome : </span>
-					<span><input type="text"  th:field="${user.cognome}"  autocomplete="off" /></span>
-					<span th:if="${#fields.hasErrors('user.cognome')}" th:errors="${user.cognome}"></span>
-			</div>
-			<div>
-					<span>Email : </span>
-					<span><input type="text"  th:field="${user.email}"  autocomplete="off" /></span>
-					<span th:if="${#fields.hasErrors('user.email')}" th:errors="${user.email}"></span>
-			</div>
-			<span><button type="submit">Conferma modifiche</button></span>
-			<p><a th:href="@{/user/profile}">Annulla</a></p>
-	</form>
+    <main class="edit-profile-main">
+      <div class="page-header">
+        <h1 class="page-title">Modifica Informazioni del Profilo</h1>
+      </div>
+
+      <div class="form-container">
+        <form th:action="@{/user/profile/changeProfile}" method="post" autocomplete="off" class="profile-form-card">
+          <h2>Modifica Dati</h2>
+
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" th:field="${user.nome}" autocomplete="off" class="form-input" />
+            <span th:if="${#fields.hasErrors('user.nome')}" th:errors="${user.nome}" class="error-message"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="cognome">Cognome</label>
+            <input type="text" id="cognome" th:field="${user.cognome}" autocomplete="off" class="form-input" />
+            <span th:if="${#fields.hasErrors('user.cognome')}" th:errors="${user.cognome}" class="error-message"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" th:field="${user.email}" autocomplete="off" class="form-input" />
+            <span th:if="${#fields.hasErrors('user.email')}" th:errors="${user.email}" class="error-message"></span>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-submit">Conferma modifiche</button>
+            <a th:href="@{/user/profile}" class="btn btn-cancel">Annulla</a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>SiwBooks - Biblioteca digitale</p>
+    </footer>
   </body>
 </html>

@@ -1,23 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
   <head>
-    <title>SiwBooks</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <title>Homepage - SiwBooks</title>
+    <link rel="stylesheet" href="/css/user/stylesUserHome.css" />
   </head>
-  <body>
-      <h1><strong>SiwBooks</strong></h1>
-	  <header>
-		<div th:if="${user}">
-			<p th:text="${user.nome + ' ' + user.cognome}"></p>
-	  		<p><a href="/logout">Logout</a></p>
-			<p><a th:href="@{/user/profile}">Profilo</a></p>
-		</div>
-		<p th:unless="${user}">
-			<span><a href="/login">Accedi</a></span>
-			<span><a href="/register">Registrati</a></span></p>	
-	  </header>
-	  <h2>Pagina iniziale</h2>
-	  <p><a href="/user/book">Tutti i libri</a></p>
-	  <p><a href="/user/author">Tutti gli autori</a></p>
+  <body class="homepage-body">
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <h1 class="logo"><strong>SiwBooks</strong></h1>
+        </div>
+        <div class="navbar-nav">
+          <div th:if="${user}" class="user-info">
+            <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+            <p class="user-actions">
+              <a th:href="@{/user/profile}" class="btn btn-profile">
+                <span class="btn-icon">👤</span>
+                Profilo
+              </a>
+              <a href="/logout" class="btn btn-logout">
+                <span class="btn-icon">🚪</span>
+                Logout
+              </a>
+            </p>
+          </div>
+          <div th:unless="${user}" class="auth-buttons">
+            <span><a href="/login" class="btn btn-login">Accedi</a></span>
+            <span><a href="/register" class="btn btn-register">Registrati</a></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="hero-section">
+      <div class="hero-content">
+        <h2 class="hero-subtitle">La tua biblioteca digitale personalizzata.</h2>
+        <p class="hero-description">
+          Esplora un vasto catalogo di libri e scopri nuovi autori, recensioni
+          e storie affascinanti.
+        </p>
+
+        <div class="action-buttons">
+          <a href="/user/book" class="btn btn-primary">
+            <span class="btn-icon">📚</span>
+            Tutti i libri
+          </a>
+          <a href="/user/author" class="btn btn-secondary">
+            <span class="btn-icon">✍️</span>
+            Tutti gli autori
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <div class="floating-element element-1">📖</div>
+        <div class="floating-element element-2">🖊️</div>
+        <div class="floating-element element-3">🌟</div>
+        <div class="floating-element element-4">💡</div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>SiwBooks - Biblioteca digitale</p>
+    </footer>
   </body>
 </html>

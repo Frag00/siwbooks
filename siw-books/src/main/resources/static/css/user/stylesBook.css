@@ -1,0 +1,575 @@
+/* Import Google Fonts - Poppins for modern look */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevents horizontal scroll */
+    display: flex;
+    flex-direction: column; /* For sticky footer */
+}
+
+/* Animated Background Elements */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: -1; /* Ensures it stays behind content */
+    animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Navbar */
+.navbar {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+    backdrop-filter: blur(20px); /* Frosted glass effect */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    transition: all 0.3s ease;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px; /* Horizontal padding */
+    width: 100%;
+}
+
+.navbar-brand .logo {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #667eea, #764ba2); /* Gradient text */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.user-actions {
+    display: flex;
+    gap: 15px; /* Spazio tra i bottoni Logout e Profilo */
+    margin: 0;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+/* General Button Styles */
+.btn {
+    padding: 10px 25px;
+    border-radius: 30px; /* Pill shape */
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-login {
+    background: linear-gradient(45deg, #3498db, #2980b9); /* Blue gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-register {
+    background: linear-gradient(45deg, #2ecc71, #27ae60); /* Green gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+}
+
+.btn-logout {
+    background: linear-gradient(45deg, #e74c3c, #c0392b); /* Red gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-profile {
+    background: linear-gradient(45deg, #f39c12, #e67e22); /* Orange gradient */
+    color: white;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.btn-icon {
+    font-size: 1.2em; /* Adjust icon size relative to text */
+}
+
+/* Specific Styles for Book Detail Page */
+.book-detail-main {
+    flex-grow: 1;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.book-detail-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    text-align: center;
+    color: #34495e;
+    margin-bottom: 30px;
+    animation: fadeInScale 0.6s ease-out forwards;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.book-detail-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    background: linear-gradient(45deg, #ff6b6b, #ee5a6f); /* Color for books */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.book-info-section {
+    text-align: left;
+    width: 100%;
+}
+
+.book-detail-item {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #555;
+    font-weight: 500;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Authors Section */
+.authors-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.author-item {
+    background: #e9f0f6;
+    border-radius: 25px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.author-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.author-link {
+    text-decoration: none;
+    color: #4ecdc4; /* Color from secondary button, for author consistency */
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+.author-link:hover {
+    color: #44a08d;
+    text-decoration: underline;
+}
+
+/* Images Section */
+.book-images-section {
+    margin-top: 30px;
+}
+
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.book-image {
+    max-width: 180px; /* Smaller max width for multiple images */
+    max-height: 180px;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Reviews Section */
+.reviews-section {
+    margin-top: 30px;
+}
+
+.reviews-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left; /* Align review content to the left */
+}
+
+.review-item {
+    background: #f8f9fa; /* Lighter background for reviews */
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #34495e;
+    margin: 0;
+}
+
+.review-rating {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #f39c12; /* Orange for rating */
+    background-color: #fff8e1;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.review-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.review-author {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #777;
+    font-style: italic;
+    margin-bottom: 10px;
+    border-top: 1px dashed #eee;
+    padding-top: 10px;
+}
+
+.review-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-sm { /* Small buttons for actions */
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    border-radius: 20px;
+    text-transform: capitalize; /* Keep casing for these */
+    letter-spacing: normal;
+    font-weight: 600;
+}
+
+.btn-danger { /* Elimina */
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.2);
+}
+
+.btn-warning { /* Modifica */
+    background: linear-gradient(45deg, #f39c12, #e67e22);
+    color: white;
+    box-shadow: 0 4px 10px rgba(243, 156, 18, 0.2);
+}
+
+
+/* Add Review Button */
+.add-review-button {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.btn-success { /* Aggiungi recensione */
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
+}
+
+/* Non esiste message */
+.no-content-message {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    color: #34495e;
+    font-size: 1.3rem;
+    font-weight: 500;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    margin: 40px auto;
+}
+
+/* Action Buttons (Back to books, Back to home) */
+.action-buttons {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-secondary {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+}
+
+.btn-home {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+
+/* Footer (consistent with other pages) */
+.footer {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: auto;
+    width: 100%;
+    backdrop-filter: blur(10px);
+}
+
+.footer p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .book-detail-main {
+        padding: 0 25px;
+    }
+
+    .book-detail-card {
+        padding: 30px;
+    }
+
+    .book-detail-title {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 0 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .navbar-brand .logo {
+        font-size: 1.5rem;
+    }
+
+    .book-detail-main {
+        padding: 0 20px;
+        margin-top: 30px;
+    }
+
+    .book-detail-card {
+        padding: 25px;
+    }
+
+    .book-detail-title {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+    }
+
+    .book-detail-item, .section-title {
+        font-size: 1.1rem;
+    }
+
+    .author-link, .book-image, .review-item, .review-title, .review-rating, .review-text, .review-author {
+        font-size: 0.95rem; /* Adjust general text size */
+    }
+    .author-link {
+        font-size: 1rem;
+    }
+
+    .image-gallery {
+        gap: 10px;
+    }
+
+    .book-image {
+        max-width: 140px;
+        max-height: 140px;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        font-size: 0.9rem;
+    }
+
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .reviews-list {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .book-detail-title {
+        font-size: 1.8rem;
+    }
+
+    .book-detail-item, .section-title {
+        font-size: 1rem;
+    }
+
+    .image-gallery {
+        flex-direction: column; /* Stack images on very small screens */
+        align-items: center;
+    }
+    .book-image {
+        max-width: 180px; /* Make them a bit larger when stacked */
+        max-height: 180px;
+    }
+
+    .review-title {
+        font-size: 1.2rem;
+    }
+    .review-rating {
+        font-size: 1.1rem;
+    }
+    .review-text {
+        font-size: 0.9rem;
+    }
+    .review-author {
+        font-size: 0.85rem;
+    }
+
+    .action-buttons {
+        flex-direction: column; /* Stack main action buttons */
+        gap: 15px;
+    }
+    .btn-success, .btn-secondary, .btn-home {
+        width: 100%; /* Full width buttons */
+        text-align: center;
+        justify-content: center;
+    }
+}

@@ -1,22 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 	 <head>
-		 <title>Autori</title>
+		 <meta charset="UTF-8" />
+		 <title>Autori - SiwBooks</title>
+		 <link rel="stylesheet" href="/css/user/stylesAuthors.css" />
 	 </head>
-	 <body>
-		<div th:if="${user}">
-					<p th:text="${user.nome + ' ' + user.cognome}"></p>
-			  		<p><a href="/logout">Logout</a></p>
-					<p><a th:href="@{/user/profile}">Profilo</a></p>
+	 <body class="authorlist-body">
+		<nav class="navbar">
+			<div class="navbar-container">
+				<div class="navbar-brand">
+					<h1 class="logo"><strong>SiwBooks</strong></h1>
 				</div>
-		 <h1>Tutti gli Autori</h1>
-		 <div th:if="${authors.isEmpty()}">Non ci sono autori nel sistema</div>
-		 <ul>
-		 	<li th:each="author : ${authors}">
-		 		<a th:href="@{'/user/author' + '/' + ${author.id}}"
-		 		th:text="${author.nome + ' ' + author.cognome}">nome e cognome</a>
-		 	</li>
-		 </ul>
-		 <p><a href="/user">Torna alla home</a></p>
+				<div class="navbar-nav">
+					<div th:if="${user}" class="user-info">
+						<p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+						<p class="user-actions">
+							<a th:href="@{/user/profile}" class="btn btn-profile">
+								<span class="btn-icon">👤</span>
+								Profilo
+							</a>
+							<a href="/logout" class="btn btn-logout">
+								<span class="btn-icon">🚪</span>
+								Logout
+							</a>
+						</p>
+					</div>
+					<div th:unless="${user}" class="auth-buttons">
+						<span><a href="/login" class="btn btn-login">Accedi</a></span>
+						<span><a href="/register" class="btn btn-register">Registrati</a></span>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<main class="authorlist-main">
+			<div class="authorlist-header">
+				<h1 class="page-title">Tutti gli Autori</h1>
+				<p class="section-description">Scopri gli scrittori dietro le tue storie preferite.</p>
+			</div>
+
+			<div th:if="${authors.isEmpty()}" class="no-content-message">Non ci sono autori nel sistema.</div>
+
+			<div th:unless="${authors.isEmpty()}" class="authors-grid">
+				<div th:each="author : ${authors}" class="author-card">
+					<a th:href="@{'/user/author' + '/' + ${author.id}}" class="author-link">
+						<div class="author-icon-placeholder">✍️</div>
+						<h2 class="author-name" th:text="${author.nome + ' ' + author.cognome}">Nome Autore</h2>
+					</a>
+				</div>
+			</div>
+
+			<div class="back-home-button">
+				<a href="/user" class="btn btn-home">
+					<span class="btn-icon">🏠</span>
+					Torna alla home
+				</a>
+			</div>
+		</main>
+
+		<footer class="footer">
+			<p>SiwBooks - Biblioteca digitale</p>
+		</footer>
 	 </body>
 </html>

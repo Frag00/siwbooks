@@ -1,55 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
  <head> 
-	 <title>New Author</title>
+	 <meta charset="UTF-8" />
+	 <title>Aggiungi Nuovo Autore - Admin - SiwBooks</title>
+	 <link rel="stylesheet" href="/css/admin/stylesFormNewAuthor.css" />
  </head>
- <body>	
- <div th:if="${user}">
-			<p th:text="${user.nome + ' ' + user.cognome}"></p>
-	  		<p><a href="/logout">Logout</a></p>
-	  		<p><a th:href="@{/admin/profile}">Profilo</a></p>
+ <body class="new-author-admin-body">	
+	<nav class="navbar">
+		<div class="navbar-container">
+			<div class="navbar-brand">
+				<h1 class="logo"><strong>SiwBooks</strong></h1>
+			</div>
+			<div class="navbar-nav">
+				<div th:if="${user}" class="user-info">
+					<p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+					<p class="user-actions">
+						<a th:href="@{/admin/profile}" class="btn btn-profile">
+							<span class="btn-icon">👤</span>
+							Profilo Admin
+						</a>
+						<a href="/logout" class="btn btn-logout">
+							<span class="btn-icon">🚪</span>
+							Logout
+						</a>
+					</p>
+				</div>
+				<div th:unless="${user}" class="auth-buttons">
+					<span><a href="/login" class="btn btn-login">Accedi</a></span>
+					<span><a href="/register" class="btn btn-register">Registrati</a></span>
+				</div>
+			</div>
 		</div>
-	 <h1>Aggiungi un autore</h1>
-	 <form th:action="@{/admin/nuovoAuthor}" method="POST" th:object="${author}" enctype="multipart/form-data">
-		<div th:if="${errEsiste}">
-		 	<p th:text="${errEsiste}"></p>
+	</nav>
+
+	<main class="new-author-admin-main">
+		<div class="page-header">
+			<h1 class="page-title">Aggiungi un nuovo autore</h1>
 		</div>
-		<div>
-		 Nome: <span><input type="text" th:field="${author.nome}"/></span>
-		 <span th:if="${#fields.hasErrors('nome')}" th:errors="${author.nome}"></span>
-		 </div>
-		 <div>
-		 Cognome: <span><input type="text" th:field="${author.cognome}"/></span>
-		 <span th:if="${#fields.hasErrors('cognome')}" th:errors="${author.cognome}"></span>
-		 </div>
-		 <div>
-		Data di nascita : <span><input type="date" th:field="${author.dataNascita}"/></span>
-		 <span th:if="${#fields.hasErrors('dataNascita')}" th:errors="${author.dataNascita}"></span>
-		 </div>
-		 <div>
-		Data di morte : <span><input type="date" th:field="${author.dataMorte}"/></span>
-		 <span th:if="${#fields.hasErrors('dataMorte')}" th:errors="${author.dataMorte}"></span>
-		 </div>
-		 <div>
-		 Nazionalità : <span><input type="text" th:field="${author.nazionalita}"/></span>
-		 <span th:if="${#fields.hasErrors('nazionalita')}" th:errors="${author.nazionalita}"></span>
-		 </div>
-		 <div>
-		 	            <label for="imageFile">Immagine</label>
-		 	            <input type="file" 
-		 	                   name="imageFile" 
-		 	                   id="imageFile"  
-		 	                   accept="image/*" 
-		 	                   required/>
-		 </div>
-		 <div th:if="${msgError}"><span th:text="${msgError}"></span>
-		 </div>
-		 <div>
-		 <span><button type="submit">Aggiungi</button></span>
-		 </div>
-		 
-	 </form>
-	 <a href="/admin/book">Torna ai Libri</a>
-	  <p><a href="/admin">Torna alla home</a></p>
+		
+		<div class="form-card-container">
+			<form th:action="@{/admin/nuovoAuthor}" method="POST" th:object="${author}" enctype="multipart/form-data" class="new-author-form">
+				<h2 class="form-heading">Dettagli dell'Autore</h2>
+
+				<div th:if="${errEsiste}" class="error-message">
+					<p th:text="${errEsiste}"></p>
+				</div>
+				
+				<div class="form-group">
+					<label for="nome_input">Nome:</label>
+					<input type="text" id="nome_input" th:field="*{nome}" placeholder="Inserisci il nome dell'autore"/>
+					<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error-message"></span>
+				</div>
+				
+				<div class="form-group">
+					<label for="cognome_input">Cognome:</label>
+					<input type="text" id="cognome_input" th:field="*{cognome}" placeholder="Inserisci il cognome dell'autore"/>
+					<span th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}" class="error-message"></span>
+				</div>
+				
+				<div class="form-group">
+					<label for="dataNascita_input">Data di nascita:</label>
+					<input type="date" id="dataNascita_input" th:field="*{dataNascita}"/>
+					<span th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}" class="error-message"></span>
+				</div>
+				
+				<div class="form-group">
+					<label for="dataMorte_input">Data di morte:</label>
+					<input type="date" id="dataMorte_input" th:field="*{dataMorte}"/>
+					<span th:if="${#fields.hasErrors('dataMorte')}" th:errors="*{dataMorte}" class="error-message"></span>
+				</div>
+				
+				<div class="form-group">
+					<label for="nazionalita_input">Nazionalità:</label>
+					<input type="text" id="nazionalita_input" th:field="*{nazionalita}" placeholder="Es. Italiana, Americana"/>
+					<span th:if="${#fields.hasErrors('nazionalita')}" th:errors="*{nazionalita}" class="error-message"></span>
+				</div>
+				
+				<div class="form-group file-upload-group">
+					<label for="imageFile_input">Immagine Profilo:</label>
+					<input type="file" 
+						   name="imageFile" 
+						   id="imageFile_input"  
+						   accept="image/*" 
+						   required
+						   class="file-input"/>
+					<span class="file-input-placeholder">Seleziona un'immagine per l'autore...</span>
+				</div>
+
+				<div th:if="${msgError}" class="error-message">
+					<p th:text="${msgError}"></p>
+				</div>
+				
+				<div class="form-actions">
+					<button type="submit" class="btn btn-submit">
+						<span class="btn-icon">➕</span>
+						Aggiungi Autore
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="back-links-group">
+			<p>
+				<a href="/admin/book" class="btn btn-secondary">
+					<span class="btn-icon">📚</span>
+					Torna ai Libri
+				</a>
+			</p>
+			<p>
+				<a href="/admin" class="btn btn-home">
+					<span class="btn-icon">🏠</span>
+					Torna alla home admin
+				</a>
+			</p>
+		</div>
+	</main>
+
+	<footer class="footer">
+		<p>SiwBooks - Biblioteca digitale</p>
+	</footer>
+	
+	<script>
+		// JavaScript for dynamic file input placeholder text
+		document.getElementById('imageFile_input').addEventListener('change', function() {
+			const placeholder = this.nextElementSibling; // Get the span with class file-input-placeholder
+			if (this.files.length > 0) {
+				placeholder.textContent = this.files[0].name;
+			} else {
+				placeholder.textContent = 'Seleziona un\'immagine per l\'autore...';
+			}
+		});
+	</script>
  </body>
 </html>

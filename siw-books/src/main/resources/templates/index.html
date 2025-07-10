@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-    <title>SiwBooks</title>
+    <meta charset="UTF-8" />
+    <title>Benvenuto su SiwBooks</title>
     <link rel="stylesheet" href="/css/stylesIndex.css" />
 </head>
-<body>
+<body class="index-body">
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
@@ -13,7 +14,12 @@
             <div class="navbar-nav">
                 <div th:if="${user}" class="user-info">
                     <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
-                    <p class="user-actions"><a href="/logout" class="btn btn-logout">Logout</a></p>
+                    <p class="user-actions">
+                        <a href="/logout" class="btn btn-logout">
+                            <span class="btn-icon">🚪</span>
+                            Logout
+                        </a>
+                    </p>
                 </div>
                 <div th:unless="${user}" class="auth-buttons">
                     <span><a href="/login" class="btn btn-login">Accedi</a></span>
@@ -27,7 +33,7 @@
         <div class="hero-content">
             <h1 class="hero-title">Benvenuto su SiwBooks</h1>
             <h2 class="hero-subtitle">La tua biblioteca digitale</h2>
-            <p class="hero-description">Scopri migliaia di libri e autori nella nostra collezione digitale</p>
+            <p class="hero-description">Esplora migliaia di titoli e scopri nuovi mondi con la nostra vasta collezione digitale. Che tu sia un lettore appassionato o un ricercatore, SiwBooks è il tuo portale per l'universo della conoscenza e dell'immaginazione.</p>
             <div class="hero-buttons">
                 <a href="/book" class="btn btn-primary">
                     <span class="btn-icon">📚</span>
@@ -41,9 +47,9 @@
         </div>
         <div class="hero-image">
             <div class="floating-element element-1">📖</div>
-            <div class="floating-element element-2">📚</div>
+            <div class="floating-element element-2">🖊️</div>
             <div class="floating-element element-3">✨</div>
-            <div class="floating-element element-4">🔖</div>
+            <div class="floating-element element-4">📚</div>
         </div>
     </main>
 

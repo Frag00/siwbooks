@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
   <head>
-    <title>SiwBooks</title>
+    <meta charset="UTF-8" />
+    <title>Accedi a SiwBooks</title>
     <link rel="stylesheet" href="/css/stylesLogin.css" />
   </head>
-  <body>
-    <!-- Navbar -->
+  <body class="login-body">
     <nav class="navbar">
       <div class="navbar-container">
         <div class="navbar-brand">
@@ -14,7 +14,12 @@
         <div class="navbar-nav">
           <div th:if="${user}" class="user-info">
             <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
-            <p class="user-actions"><a href="/logout" class="btn btn-logout">Logout</a></p>
+            <p class="user-actions">
+                <a href="/logout" class="btn btn-logout">
+                    <span class="btn-icon">🚪</span>
+                    Logout
+                </a>
+            </p>
           </div>
           <div th:unless="${user}" class="auth-buttons">
             <span><a href="/login" class="btn btn-login">Accedi</a></span>
@@ -24,41 +29,53 @@
       </div>
     </nav>
 
-    <!-- Contenuto principale -->
     <main class="hero-section">
       <div class="hero-content">
-        <h2 class="hero-subtitle">Hai già un account? Accedi</h2>
+        <h2 class="hero-subtitle">Accedi al tuo account SiwBooks</h2>
 
-        <div th:if="${param.registered}" style="color: #2ecc71; margin-bottom: 15px; font-weight: 600;">
-          Registrazione completata con successo! Ora puoi effettuare il login.
+        <div th:if="${param.registered}" class="success-message">
+          <p>Registrazione completata con successo! Ora puoi effettuare il login.</p>
         </div>
 
-        <form th:action="@{/login}" method="post" style="display: flex; flex-direction: column; gap: 15px; max-width: 400px;">
-          <div>
-            <label for="username" style="color: white; font-weight: 500;">Username:</label>
-            <input type="text" name="username" required autocomplete="off" class="form-control" />
+        <div th:if="${param.error}" class="error-message">
+            <p>Nome utente o password non validi.</p>
+        </div>
+
+        <form th:action="@{/login}" method="post" class="login-form">
+          <div class="form-group">
+            <label for="username_input">Username:</label>
+            <input type="text" id="username_input" name="username" required autocomplete="off" placeholder="Inserisci il tuo username" />
           </div>
-          <div>
-            <label for="pwd" style="color: white; font-weight: 500;">Password:</label>
-            <input type="password" name="pwd" required autocomplete="off" class="form-control" />
+          <div class="form-group">
+            <label for="password_input">Password:</label>
+            <input type="password" id="password_input" name="pwd" required autocomplete="off" placeholder="Inserisci la tua password" />
           </div>
-          <button type="submit" class="btn btn-primary mt-3">Login</button>
+          <button type="submit" class="btn btn-submit">
+              <span class="btn-icon">➡️</span>
+              Login
+          </button>
         </form>
 
+        <p class="forgot-password">
+            Non hai un account? <a th:href="@{/register}">Registrati qui</a>
+        </p>
+
         <p class="mt-4">
-          <a th:href="@{/}" class="btn btn-secondary">Torna alla Homepage</a>
+          <a th:href="@{/}" class="btn btn-secondary">
+              <span class="btn-icon">🏠</span>
+              Torna alla Homepage
+          </a>
         </p>
       </div>
 
       <div class="hero-image">
-        <div class="floating-element element-1">🔐</div>
-        <div class="floating-element element-2">📘</div>
-        <div class="floating-element element-3">🔑</div>
-        <div class="floating-element element-4">👤</div>
+        <div class="floating-element element-1">🔑</div>
+        <div class="floating-element element-2">📚</div>
+        <div class="floating-element element-3">✨</div>
+        <div class="floating-element element-4">🔐</div>
       </div>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
       <p>SiwBooks - Biblioteca digitale</p>
     </footer>

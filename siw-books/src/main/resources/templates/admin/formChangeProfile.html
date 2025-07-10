@@ -1,35 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
   <head>
-    <title>Modifica Profilo Admin</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <title>Modifica Profilo Admin - SiwBooks</title>
+    <link rel="stylesheet" href="/css/admin/stylesEditProfile.css" />
   </head>
-  <body>
-	<div th:if="${user}">
-						<p th:text="${user.nome + ' ' + user.cognome}"></p>
-				  		<p><a href="/logout">Logout</a></p>
-						<p><a th:href="@{/admin/profile}">Profilo</a></p>
-					</div>
-      <h1><strong>Modifica Informazioni del Profilo dell'Admin</strong></h1>
+  <body class="edit-user-admin-body">
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <h1 class="logo"><strong>SiwBooks</strong></h1>
+        </div>
+        <div class="navbar-nav">
+          <div th:if="${user}" class="user-info">
+            <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+            <p class="user-actions">
+              <a th:href="@{/admin/profile}" class="btn btn-profile">
+                <span class="btn-icon">👤</span>
+                Profilo Admin
+              </a>
+              <a href="/logout" class="btn btn-logout">
+                <span class="btn-icon">🚪</span>
+                Logout
+              </a>
+            </p>
+          </div>
+          <div th:unless="${user}" class="auth-buttons">
+            <span><a href="/login" class="btn btn-login">Accedi</a></span>
+            <span><a href="/register" class="btn btn-register">Registrati</a></span>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-	<form th:action="@{/admin/profile/changeProfile}" method="post" autocomplete="off">
-			<div>
-					<span>Nome : </span>
-					<span><input type="text" th:field="${user.nome}"  autocomplete="off" /></span>
-					<span th:if="${#fields.hasErrors('user.nome')}" th:errors="${user.nome}"></span>
-			</div>
-			<div>
-					<span>Cognome : </span>
-					<span><input type="text"  th:field="${user.cognome}"  autocomplete="off" /></span>
-					<span th:if="${#fields.hasErrors('user.cognome')}" th:errors="${user.cognome}"></span>
-			</div>
-			<div>
-					<span>Email : </span>
-					<span><input type="text"  th:field="${user.email}"  autocomplete="off" /></span>
-					<span th:if="${#fields.hasErrors('user.email')}" th:errors="${user.email}"></span>
-			</div>
-			<span><button type="submit">Conferma modifiche</button></span>
-			<p><a th:href="@{/admin/profile}">Annulla</a></p>
-	</form>
+    <main class="edit-user-admin-main">
+      <div class="page-header">
+        <h1 class="page-title">Modifica Informazioni del Profilo dell'Admin</h1>
+      </div>
+
+      <div class="form-card-container">
+        <form th:action="@{/admin/profile/changeProfile}" method="post" autocomplete="off" class="profile-edit-form">
+          <h2 class="form-heading">Dati del Profilo</h2>
+
+          <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" th:field="${user.nome}" autocomplete="off" />
+            <span th:if="${#fields.hasErrors('user.nome')}" th:errors="${user.nome}" class="error-message"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="cognome">Cognome:</label>
+            <input type="text" id="cognome" th:field="${user.cognome}" autocomplete="off" />
+            <span th:if="${#fields.hasErrors('user.cognome')}" th:errors="${user.cognome}" class="error-message"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" id="email" th:field="${user.email}" autocomplete="off" />
+            <span th:if="${#fields.hasErrors('user.email')}" th:errors="${user.email}" class="error-message"></span>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-submit">
+              <span class="btn-icon">✔️</span>
+              Conferma modifiche
+            </button>
+            <a th:href="@{/admin/profile}" class="btn btn-cancel">
+              <span class="btn-icon">↩️</span>
+              Annulla
+            </a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>SiwBooks - Biblioteca digitale</p>
+    </footer>
   </body>
 </html>

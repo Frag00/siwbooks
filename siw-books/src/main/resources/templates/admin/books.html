@@ -1,26 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 	 <head>
-		 <title>Libri</title>
+		 <meta charset="UTF-8" />
+		 <title>Tutti i Libri - Gestione Admin - SiwBooks</title>
+		 <link rel="stylesheet" href="/css/admin/stylesBooks.css" />
 	 </head>
-	 <body>
-		<div th:if="${user}">
-					<p th:text="${user.nome + ' ' + user.cognome}"></p>
-			  		<p><a href="/logout">Logout</a></p>
-					<p><a th:href="@{/admin/profile}">Profilo</a></p>
+	 <body class="books-admin-body">
+		<nav class="navbar">
+			<div class="navbar-container">
+				<div class="navbar-brand">
+					<h1 class="logo"><strong>SiwBooks</strong></h1>
 				</div>
-		 <h1>Tutti i libri</h1>
-		 <div th:if="${books.isEmpty()}">Non ci sono libri nel sistema</div>
-		 <ul>
-		 	<li th:each="book : ${books}">
-		 		<a th:href="@{'/admin/book' + '/' + ${book.id}}"
-		 		th:text="${book.titolo}">titolo</a>
-				<a th:href="@{'/admin/book/' + ${book.id} + '/remove'}">Elimina</a>
-				<a th:href="@{'/admin/book/' + ${book.id} + '/formEditBook'}">Modifica</a>
-		 	</li>
-		 </ul> 
-		 <p><a href="/admin/formNewBook">Aggiungi nuovo libro </a></p>
-		 <p><a href="/admin/formNewAuthor">Aggiungi nuovo autore </a></p>
-		 <p><a href="/admin">Torna alla home</a></p>
+				<div class="navbar-nav">
+					<div th:if="${user}" class="user-info">
+						<p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+						<p class="user-actions">
+							<a th:href="@{/admin/profile}" class="btn btn-profile">
+								<span class="btn-icon">👤</span>
+								Profilo Admin
+							</a>
+							<a href="/logout" class="btn btn-logout">
+								<span class="btn-icon">🚪</span>
+								Logout
+							</a>
+						</p>
+					</div>
+					<div th:unless="${user}" class="auth-buttons">
+						<span><a href="/login" class="btn btn-login">Accedi</a></span>
+						<span><a href="/register" class="btn btn-register">Registrati</a></span>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<main class="books-admin-main">
+			<div class="page-header">
+				<h1 class="page-title">Tutti i Libri</h1>
+			</div>
+
+			<div th:if="${books.isEmpty()}" class="info-message-card">
+				<p>Non ci sono libri nel sistema</p>
+			</div>
+			
+			<div th:unless="${books.isEmpty()}" class="books-grid-container">
+				<ul class="books-list-grid">
+					<li th:each="book : ${books}" class="book-card-item">
+						<div class="book-info">
+							<h3 class="book-title">
+								<a th:href="@{'/admin/book' + '/' + ${book.id}}"
+								th:text="${book.titolo}">titolo</a>
+							</h3>
+						</div>
+						<div class="book-actions">
+							<a th:href="@{'/admin/book/' + ${book.id} + '/formEditBook'}" class="btn btn-edit">
+								<span class="btn-icon">✏️</span>
+								Modifica
+							</a>
+							<a th:href="@{'/admin/book/' + ${book.id} + '/remove'}" class="btn btn-delete">
+								<span class="btn-icon">🗑️</span>
+								Elimina
+							</a>
+						</div>
+					</li>
+				</ul> 
+			</div>
+			
+			<div class="action-buttons-group">
+				<a href="/admin/formNewBook" class="btn btn-add-book">
+					<span class="btn-icon">➕</span>
+					Aggiungi nuovo libro 
+				</a>
+				<a href="/admin/formNewAuthor" class="btn btn-add-author">
+					<span class="btn-icon">✍️</span>
+					Aggiungi nuovo autore 
+				</a>
+			</div>
+
+			<div class="back-link-home">
+				<a href="/admin" class="btn btn-home">
+					<span class="btn-icon">🏠</span>
+					Torna alla home
+				</a>
+			</div>
+		</main>
+
+		<footer class="footer">
+			<p>SiwBooks - Biblioteca digitale</p>
+		</footer>
 	 </body>
 </html>

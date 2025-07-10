@@ -1,23 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
   <head>
-    <title>SiwBooks</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <title>Dashboard Admin - SiwBooks</title>
+    <link rel="stylesheet" href="/css/admin/stylesAdminHome.css" />
   </head>
-  <body>
-      <h1><strong>SiwBooks</strong></h1>
-	  <header>
-		<div th:if="${user}">
-			<p th:text="${user.nome + ' ' + user.cognome}"></p>
-	  		<p><a href="/logout">Logout</a></p>
-			<p><a th:href="@{/admin/profile}">Profilo</a></p>
-		</div>
-		<p th:unless="${user}">
-			<span><a href="/login">Accedi</a></span>
-			<span><a href="/register">Registrati</a></span></p>	
-	  </header>
-	  <h2>Pagina iniziale</h2>
-	  <p><a href="/admin/book">Tutti i libri</a></p>
-	  <p><a href="/admin/author">Tutti gli autori</a></p>
+  <body class="admin-index-body">
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <h1 class="logo"><strong>SiwBooks</strong></h1>
+        </div>
+        <div class="navbar-nav">
+          <div th:if="${user}" class="user-info">
+            <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+            <p class="user-actions">
+              <a th:href="@{/admin/profile}" class="btn btn-profile">
+                <span class="btn-icon">👤</span>
+                Profilo Admin
+              </a>
+              <a href="/logout" class="btn btn-logout">
+                <span class="btn-icon">🚪</span>
+                Logout
+              </a>
+            </p>
+          </div>
+          <div th:unless="${user}" class="auth-buttons">
+            <span><a href="/login" class="btn btn-login">Accedi</a></span>
+            <span><a href="/register" class="btn btn-register">Registrati</a></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="admin-index-main">
+      <div class="welcome-section">
+        <h1 class="welcome-title">Benvenuto, Amministratore!</h1>
+        <p class="welcome-subtitle">Gestisci la biblioteca di SiwBooks</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <a th:href="@{/admin/book}" class="dashboard-card card-books">
+          <div class="card-icon">📚</div>
+          <h3 class="card-title">Gestisci Libri</h3>
+          <p class="card-description">Visualizza e modifica tutti i libri.</p>
+        </a>
+
+        <a th:href="@{/admin/author}" class="dashboard-card card-authors">
+          <div class="card-icon">✍️</div>
+          <h3 class="card-title">Gestisci Autori</h3>
+          <p class="card-description">Visualizza e modifica tutti gli autori.</p>
+        </a>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+      <p>SiwBooks - Biblioteca digitale</p>
+    </footer>
   </body>
 </html>

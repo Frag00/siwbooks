@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-  <title>SiwBooks</title>
+  <meta charset="UTF-8" />
+  <title>Registrati a SiwBooks</title>
   <link rel="stylesheet" href="/css/stylesRegister.css" />
 </head>
-<body>
-  <!-- Navbar -->
+<body class="register-body">
   <nav class="navbar">
     <div class="navbar-container">
       <div class="navbar-brand">
@@ -14,7 +14,12 @@
       <div class="navbar-nav">
         <div th:if="${user}" class="user-info">
           <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
-          <p class="user-actions"><a href="/logout" class="btn btn-logout">Logout</a></p>
+          <p class="user-actions">
+            <a href="/logout" class="btn btn-logout">
+              <span class="btn-icon">🚪</span>
+              Logout
+            </a>
+          </p>
         </div>
         <div th:unless="${user}" class="auth-buttons">
           <span><a href="/login" class="btn btn-login">Accedi</a></span>
@@ -24,65 +29,72 @@
     </div>
   </nav>
 
-  <!-- Contenuto principale -->
   <main class="hero-section">
     <div class="hero-content">
-      <h2 class="hero-subtitle">Crea un nuovo account</h2>
+      <h2 class="hero-subtitle">Crea un nuovo account SiwBooks</h2>
 
-      <form th:action="@{/register}" method="post" autocomplete="off"
-            style="display: flex; flex-direction: column; gap: 15px; max-width: 500px;">
+      <form th:action="@{/register}" method="post" autocomplete="off" class="register-form">
 
-        <div>
-          <label style="color: white; font-weight: 500;">Nome:</label>
-          <input type="text" th:field="${utente.nome}" autocomplete="off" class="form-control" />
-          <span th:if="${#fields.hasErrors('utente.nome')}" th:errors="${utente.nome}"></span>
+        <div class="form-group">
+          <label for="nome_input">Nome:</label>
+          <input type="text" id="nome_input" th:field="${utente.nome}" autocomplete="off" placeholder="Il tuo nome" />
+          <span th:if="${#fields.hasErrors('utente.nome')}" th:errors="${utente.nome}" class="error-message"></span>
         </div>
 
-        <div>
-          <label style="color: white; font-weight: 500;">Cognome:</label>
-          <input type="text" th:field="${utente.cognome}" autocomplete="off" class="form-control" />
-          <span th:if="${#fields.hasErrors('utente.cognome')}" th:errors="${utente.cognome}"></span>
+        <div class="form-group">
+          <label for="cognome_input">Cognome:</label>
+          <input type="text" id="cognome_input" th:field="${utente.cognome}" autocomplete="off" placeholder="Il tuo cognome" />
+          <span th:if="${#fields.hasErrors('utente.cognome')}" th:errors="${utente.cognome}" class="error-message"></span>
         </div>
 
-        <div>
-          <label style="color: white; font-weight: 500;">Email:</label>
-          <input type="text" th:field="${utente.email}" autocomplete="off" class="form-control" />
-          <span th:if="${#fields.hasErrors('utente.email')}" th:errors="${utente.email}"></span>
+        <div class="form-group">
+          <label for="email_input">Email:</label>
+          <input type="text" id="email_input" th:field="${utente.email}" autocomplete="off" placeholder="La tua email" />
+          <span th:if="${#fields.hasErrors('utente.email')}" th:errors="${utente.email}" class="error-message"></span>
         </div>
 
-        <div>
-          <label style="color: white; font-weight: 500;">Username:</label>
-          <input type="text" th:field="${credentials.username}" autocomplete="off" class="form-control" />
-          <span th:if="${#fields.hasErrors('credentials.username')}" th:errors="${credentials.username}"></span>
+        <div class="form-group">
+          <label for="username_input">Username:</label>
+          <input type="text" id="username_input" th:field="${credentials.username}" autocomplete="off" placeholder="Scegli un username" />
+          <span th:if="${#fields.hasErrors('credentials.username')}" th:errors="${credentials.username}" class="error-message"></span>
         </div>
 
-        <div>
-          <label style="color: white; font-weight: 500;">Password:</label>
-          <input type="password" th:field="${credentials.password}" autocomplete="off" minlength="8" class="form-control" />
-          <span th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}"></span>
+        <div class="form-group">
+          <label for="password_input">Password:</label>
+          <input type="password" id="password_input" th:field="${credentials.password}" autocomplete="off" minlength="8" placeholder="Crea una password (min. 8 caratteri)" />
+          <span th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}" class="error-message"></span>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Registrati</button>
+        <button type="submit" class="btn btn-submit">
+          <span class="btn-icon">✅</span>
+          Registrati
+        </button>
       </form>
 
-      <div th:if="${esiste}" style="color: red; margin-top: 15px;">
-        <span th:text="${esiste}"></span>
+      <div th:if="${esiste}" class="error-message-large">
+        <p th:text="${esiste}"></p>
       </div>
 
+      <p class="login-link">
+        Hai già un account? <a th:href="@{/login}">Accedi qui</a>
+      </p>
+
       <p class="mt-4">
-        <a th:href="@{/}" class="btn btn-secondary">Torna alla Homepage</a>
+        <a th:href="@{/}" class="btn btn-secondary">
+          <span class="btn-icon">🏠</span>
+          Torna alla Homepage
+        </a>
       </p>
     </div>
 
     <div class="hero-image">
-      <div class="floating-element element-1">📖</div>
-      <div class="floating-element element-2">📝</div>
-      <div class="floating-element element-3">📚</div>
-      <div class="floating-element element-4">👥</div>
+      <div class="floating-element element-1">✏️</div>
+      <div class="floating-element element-2">📖</div>
+      <div class="floating-element element-3">⭐</div>
+      <div class="floating-element element-4">📚</div>
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
     <p>SiwBooks - Biblioteca digitale</p>
   </footer>

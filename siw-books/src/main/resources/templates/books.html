@@ -1,24 +1,58 @@
 <!DOCTYPE html>
-<html>
-	 <head>
-		 <title>Libri</title>
-	 </head>
-	 <body>
-		<div th:if="${user}">
-					<p th:text="${user.nome + ' ' + user.cognome}"></p>
-			  		<p><a href="/logout">Logout</a></p>
-				</div>
-				<p th:unless="${user}">
-					<span><a href="/login">Accedi</a></span>
-					<span><a href="/register">Registrati</a></span></p>	
-		 <h1>Tutti i libri</h1>
-		 <div th:if="${books.isEmpty()}">Non ci sono libri nel sistema</div>
-		 <ul>
-		 	<li th:each="book : ${books}">
-		 		<a th:href="@{'/book' + '/' + ${book.id}}"
-		 		th:text="${book.titolo}">titolo</a>
-		 	</li>
-		 </ul>
-		 <p><a href="/">Torna alla home</a></p>
-	 </body>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <title>Libri - SiwBooks</title>
+    <link rel="stylesheet" href="/css/stylesBooks.css" />
+</head>
+<body class="booklist-body">
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1 class="logo"><strong>SiwBooks</strong></h1>
+            </div>
+            <div class="navbar-nav">
+                <div th:if="${user}" class="user-info">
+                    <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+                    <p class="user-actions"><a href="/logout" class="btn btn-logout">Logout</a></p>
+                </div>
+                <div th:unless="${user}" class="auth-buttons">
+                    <span><a href="/login" class="btn btn-login">Accedi</a></span>
+                    <span><a href="/register" class="btn btn-register">Registrati</a></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="booklist-main">
+        <div class="booklist-header">
+            <h1 class="page-title">Tutti i libri</h1>
+            <p class="section-description">Esplora la nostra vasta collezione di titoli disponibili.</p>
+        </div>
+
+        <div th:if="${books.isEmpty()}" class="no-content-message">
+            <p>Non ci sono libri disponibili nel sistema al momento.</p>
+        </div>
+
+        <div th:unless="${books.isEmpty()}" class="books-grid">
+            <div th:each="book : ${books}" class="book-card">
+                <a th:href="@{'/book' + '/' + ${book.id}}" class="book-link">
+                    <div class="book-cover-placeholder">📚</div>
+                    <h2 class="book-title" th:text="${book.titolo}">Titolo del Libro</h2>
+                </a>
+            </div>
+        </div>
+
+        <div class="back-home-button">
+            <a href="/" class="btn btn-home">
+                <span class="btn-icon">🏠</span>
+                Torna alla home
+            </a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>SiwBooks - Biblioteca digitale</p>
+    </footer>
+</body>
 </html>

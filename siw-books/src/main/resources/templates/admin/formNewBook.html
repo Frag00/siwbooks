@@ -1,53 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
  <head>
-	 <title>New Book</title>
+	 <meta charset="UTF-8" />
+	 <title>Aggiungi Nuovo Libro - Admin - SiwBooks</title>
+	 <link rel="stylesheet" href="/css/admin/stylesFormNewBook.css" />
  </head>
- <body>	
-	<div th:if="${user}">
-				<p th:text="${user.nome + ' ' + user.cognome}"></p>
-		  		<p><a href="/logout">Logout</a></p>
-				<p><a th:href="@{/admin/profile}">Profilo</a></p>
+ <body class="new-book-admin-body">	
+	<nav class="navbar">
+		<div class="navbar-container">
+			<div class="navbar-brand">
+				<h1 class="logo"><strong>SiwBooks</strong></h1>
 			</div>
-	 <h1>Aggiungi un libro</h1>
-	 <form th:action="@{/pippo}" method="POST" th:object="${book}" enctype="multipart/form-data">
-		<div th:if="${errEsiste}">
-		 	<p th:text="${errEsiste}"></p>
+			<div class="navbar-nav">
+				<div th:if="${user}" class="user-info">
+					<p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+					<p class="user-actions">
+						<a th:href="@{/admin/profile}" class="btn btn-profile">
+							<span class="btn-icon">👤</span>
+							Profilo Admin
+						</a>
+						<a href="/logout" class="btn btn-logout">
+							<span class="btn-icon">🚪</span>
+							Logout
+						</a>
+					</p>
+				</div>
+				<div th:unless="${user}" class="auth-buttons">
+					<span><a href="/login" class="btn btn-login">Accedi</a></span>
+					<span><a href="/register" class="btn btn-register">Registrati</a></span>
+				</div>
+			</div>
 		</div>
-		<div>
-		 Titolo: <span><input type="text" th:field="${book.titolo}"/></span>
-		 <span th:if="${#fields.hasErrors('titolo')}" th:errors="${book.titolo}"></span>
-		 </div>
-		 <div>
-		 Anno di Pubblicazione: <span><input type="text" th:field="${book.annoPubblicazione}"/></span>
-		 <span th:if="${#fields.hasErrors('annoPubblicazione')}" th:errors="${book.annoPubblicazione}"></span>
-		 </div>
-		 <div>
-		     <label>Autori:</label>
-		     <div th:each="autore : ${authors}">
-		         <label>
-		             <input type="checkbox" 
-					 		name = "autori"
-		                    th:value="${autore.id}" /> 
-		             <span th:text="${autore.nome + ' ' + autore.cognome}"></span>
-		         </label>
-		     </div>
-		 </div>
-		 <div>
-		 	            <label for="imageFiles">Immagini</label>
-		 	            <input type="file" 
-		 	                   name="imageFiles" 
-		 	                   id="imageFiles" 
-		 	                   multiple 
-		 	                   accept="image/*" 
-		 	                   required/>
-		 </div>
-		 <div>
-		 <span><button type="submit">Aggiungi</button></span>
-		 </div>
-		 
-	 </form>
-	 <a href="/admin/book">Torna ai libri</a>
-	 <p><a href="/admin">Torna alla home</a></p>
+	</nav>
+
+	<main class="new-book-admin-main">
+		<div class="page-header">
+			<h1 class="page-title">Aggiungi un nuovo libro</h1>
+		</div>
+		
+		<div class="form-card-container">
+			<form th:action="@{/pippo}" method="POST" th:object="${book}" enctype="multipart/form-data" class="new-book-form">
+				<h2 class="form-heading">Dettagli del Libro</h2>
+
+				<div th:if="${errEsiste}" class="error-message">
+					<p th:text="${errEsiste}"></p>
+				</div>
+				
+				<div class="form-group">
+					<label for="titolo_input">Titolo:</label> <input type="text" id="titolo_input" th:field="*{titolo}" placeholder="Inserisci il titolo del libro" />
+					<span th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}" class="error-message"></span>
+				</div>
+				
+				<div class="form-group">
+					<label for="annoPubblicazione_input">Anno di Pubblicazione:</label> <input type="number" id="annoPubblicazione_input" th:field="*{annoPubblicazione}" placeholder="Es. 2023" min="1000" max="2100" />
+					<span th:if="${#fields.hasErrors('annoPubblicazione')}" th:errors="*{annoPubblicazione}" class="error-message"></span>
+				</div>
+				
+				<div class="form-group checkbox-group">
+					<label class="group-label">Autori:</label>
+					<div class="checkbox-options">
+						<div th:each="autore : ${authors}" class="checkbox-option">
+							<label>
+								<input type="checkbox" name="autori" th:value="${autore.id}" /> 
+								<span th:text="${autore.nome + ' ' + autore.cognome}"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group file-upload-group">
+					<label for="imageFiles_input">Immagini:</label> <input type="file" 
+						   name="imageFiles" 
+						   id="imageFiles_input" 
+						   multiple 
+						   accept="image/*" 
+						   required
+						   class="file-input" />
+					<span class="file-input-placeholder">Seleziona una o più immagini...</span>
+				</div>
+				
+				<div class="form-actions">
+					<button type="submit" class="btn btn-submit">
+						<span class="btn-icon">➕</span>
+						Aggiungi Libro
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="back-links-group">
+			<p>
+				<a href="/admin/book" class="btn btn-secondary">
+					<span class="btn-icon">📚</span>
+					Torna ai libri
+				</a>
+			</p>
+			<p>
+				<a href="/admin" class="btn btn-home">
+					<span class="btn-icon">🏠</span>
+					Torna alla home admin
+				</a>
+			</p>
+		</div>
+	</main>
+
+	<footer class="footer">
+		<p>SiwBooks - Biblioteca digitale</p>
+	</footer>
+	
+	<script>
+		document.getElementById('imageFiles_input').addEventListener('change', function() {
+			const numFiles = this.files.length;
+			const placeholder = this.nextElementSibling; // Get the span with class file-input-placeholder
+			if (numFiles > 0) {
+				placeholder.textContent = numFiles === 1 ? this.files[0].name : `${numFiles} immagini selezionate`;
+			} else {
+				placeholder.textContent = 'Seleziona una o più immagini...';
+			}
+		});
+	</script>
  </body>
 </html>

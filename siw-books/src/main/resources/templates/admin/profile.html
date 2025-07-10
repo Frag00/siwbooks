@@ -1,24 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 	<head>
-		<title>Profilo Admin</title>
+		<meta charset="UTF-8" />
+		<title>Profilo Admin - SiwBooks</title>
+		<link rel="stylesheet" href="/css/admin/stylesProfile.css" />
 	</head>
-	<body> 
-		<div th:if="${user}">
-					<p th:text="${user.nome + ' ' + user.cognome}"></p>
-			  		<p><a href="/logout">Logout</a></p>
-					<p><a th:href="@{/admin/profile}">Profilo</a></p>
+	<body class="admin-profile-body"> 
+		<nav class="navbar">
+			<div class="navbar-container">
+				<div class="navbar-brand">
+					<h1 class="logo"><strong>SiwBooks</strong></h1>
 				</div>
-		<div th:if="${user}">
-			<h1>Profilo Admin</h1>
-			<h1 th:text="${user.nome + ' ' + user.cognome}">Nome e cognome</h1>
-			<div>Email : <span th:text="${user.email} ">2000</span></div>
-			
-			
-			<p><a th:href="@{/admin/profile/formChangeProfile}">Modifica informazioni Profilo</a></p>
-			<p><a th:href="@{/admin/profile/formChangePassword}">Cambia Password</a></p>
-			
-		</div>
-		<p><a href="/admin">Vai alla Homepage</a></p>
+				<div class="navbar-nav">
+					<div th:if="${user}" class="user-info">
+						<p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+						<p class="user-actions">
+							<a th:href="@{/admin/profile}" class="btn btn-profile">
+								<span class="btn-icon">👤</span>
+								Profilo
+							</a>
+							<a href="/logout" class="btn btn-logout">
+								<span class="btn-icon">🚪</span>
+								Logout
+							</a>
+						</p>
+					</div>
+					<div th:unless="${user}" class="auth-buttons">
+						<span><a href="/login" class="btn btn-login">Accedi</a></span>
+						<span><a href="/register" class="btn btn-register">Registrati</a></span>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<main class="admin-profile-main">
+			<div th:if="${user}" class="profile-card-container">
+				<div class="page-header">
+					<h1 class="page-title">Profilo Amministratore</h1>
+					<h2 class="admin-name" th:text="${user.nome + ' ' + user.cognome}">Nome e cognome Admin</h2>
+				</div>
+				
+				<div class="profile-details-card">
+					<div class="detail-item">
+						<span class="detail-label">Email:</span> 
+						<span class="detail-value" th:text="${user.email}">admin@example.com</span>
+					</div>
+				</div>
+				
+				<div class="profile-actions">
+					<p>
+						<a th:href="@{/admin/profile/formChangeProfile}" class="btn btn-edit-profile">
+							<span class="btn-icon">✍️</span>
+							Modifica informazioni Profilo
+						</a>
+					</p>
+					<p>
+						<a th:href="@{/admin/profile/formChangePassword}" class="btn btn-change-password">
+							<span class="btn-icon">🔑</span>
+							Cambia Password
+						</a>
+					</p>
+				</div>
+			</div>
+		
+			<div class="back-link-home">
+				<p>
+					<a href="/admin" class="btn btn-home">
+						<span class="btn-icon">🏠</span>
+						Vai alla Homepage Admin
+					</a>
+				</p>
+			</div>
+		</main>
+
+		<footer class="footer">
+			<p>SiwBooks - Biblioteca digitale</p>
+		</footer>
 	</body>
 </html>

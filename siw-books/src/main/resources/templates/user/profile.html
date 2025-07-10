@@ -2,11 +2,10 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8" />
-    <title>Profilo utente</title>
-    <link rel="stylesheet" href="/css/stylesUserProfile.css" />
+    <title>Profilo utente - SiwBooks</title>
+    <link rel="stylesheet" href="/css/user/stylesUserProfile.css" />
 </head>
-<body>
-    <!-- Navbar coerente -->
+<body class="profile-body">
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
@@ -25,34 +24,38 @@
         </div>
     </nav>
 
-    <!-- Box profilo utente -->
-    <main class="profile-container" th:if="${user}">
-        <h1 th:text="${user.nome + ' ' + user.cognome}">Nome e cognome</h1>
-        <div>Email: <span th:text="${user.email}">email@example.com</span></div>
+    <main class="profile-main">
+        <div class="profile-card" th:if="${user}">
+            <h1 class="profile-name" th:text="${user.nome + ' ' + user.cognome}">Nome e cognome</h1>
+            <div class="profile-detail"><span class="detail-label">Email:</span> <span th:text="${user.email}">email@example.com</span></div>
 
-        <div th:if="${!user.recensioni.isEmpty()}">
-            <h3>Le tue recensioni:</h3>
-            <ul>
-                <li th:each="r : ${recensioni}">
-                    <span th:utext="${r.titolo + '<br/>' + r.voto + '<br/>' + r.testo + '<br/>'}">Recensione</span>
-                    <p th:if="${r.libro}">
-                        Relativa al libro:
-                        <a th:href="@{'/user/book/' + ${r.libro.id}}" th:text="${r.libro.titolo}">Libro</a>
-                    </p>
-                </li>
-            </ul>
+            <div th:if="${!user.recensioni.isEmpty()}" class="reviews-section">
+                <h3 class="reviews-title">Le tue recensioni:</h3>
+                <ul class="reviews-list">
+                    <li th:each="r : ${recensioni}" class="review-item">
+                        <p class="review-content" th:utext="${r.titolo + '<br/>' + r.voto + ' / 5 ⭐<br/>' + r.testo + '<br/>'}">Recensione</p>
+                        <p th:if="${r.libro}" class="review-book-link">
+                            Relativa al libro:
+                            <a th:href="@{'/user/book/' + ${r.libro.id}}" th:text="${r.libro.titolo}" class="book-link">Libro</a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="profile-actions-buttons">
+                <a th:href="@{/user/profile/formChangeProfile}" class="btn btn-primary">Modifica Profilo</a>
+                <a th:href="@{/user/profile/formChangePassword}" class="btn btn-secondary">Cambia Password</a>
+            </div>
         </div>
 
-        <a th:href="@{/user/profile/formChangeProfile}" class="btn-profile btn-edit">Modifica Profilo</a>
-        <a th:href="@{/user/profile/formChangePassword}" class="btn-profile btn-edit">Cambia Password</a>
+        <div class="back-home-button">
+            <a href="/user" class="btn btn-home">
+                <span class="btn-icon">🏠</span>
+                Vai alla Homepage
+            </a>
+        </div>
     </main>
 
-    <!-- Pulsante per tornare alla home -->
-    <div class="profile-actions">
-        <a href="/user" class="btn-profile btn-home">Vai alla Homepage</a>
-    </div>
-
-    <!-- Footer coerente -->
     <footer class="footer">
         <p>SiwBooks - Biblioteca digitale</p>
     </footer>

@@ -1,37 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
  <head>
-	 <title>New Review</title>
+	 <meta charset="UTF-8" />
+	 <title>Nuova Recensione - SiwBooks</title>
+	 <link rel="stylesheet" href="/css/user/stylesFormNewReview.css" />
  </head>
- <body>	
-	<div th:if="${user}">
-				<p th:text="${user.nome + ' ' + user.cognome}"></p>
-		  		<p><a href="/logout">Logout</a></p>
-				<p><a th:href="@{/user/profile}">Profilo</a></p>
+ <body class="add-review-body">	
+	<nav class="navbar">
+		<div class="navbar-container">
+			<div class="navbar-brand">
+				<h1 class="logo"><strong>SiwBooks</strong></h1>
 			</div>
-	<div th:if="${giaEsiste}" th:text="${giaEsiste}"></div>
-	<div th:unless="${giaEsiste}">
-	 <h1>Aggiungi una recensione al libro</h1>
-	 <form th:action="@{/user/book/{bookId}/addReview(bookId=${book.id})}" method="POST" th:object="${review}" >
-		<div>
-		 Titolo: <span><input type="text" th:field="*{titolo}" /></span>
-		 <span th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}"></span>
-		 </div>
-		 <div>
-		 Voto: <span><input type="number" min="1" max="5" step="1" th:field="*{voto}"/></span>
-		 <span th:if="${#fields.hasErrors('voto')}" th:errors="*{voto}"></span>
-		 </div>
-		 <div>
-		 	Descrizione : <span><input type="text" th:field="*{testo}" /></span>
-	     	<span th:if="${#fields.hasErrors('testo')}" th:errors="*{testo}"></span>
-		 </div>
-		 <div>
-		 <span><button type="submit">Aggiungi</button></span>
-		 </div>
-		 
-	 </form>
-	</div>
-	 <p><a href="/user/book">Torna ai libri</a></p>
-	 <p><a href="/user">Torna alla home</a></p>
+			<div class="navbar-nav">
+				<div th:if="${user}" class="user-info">
+					<p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+					<p class="user-actions">
+						<a th:href="@{/user/profile}" class="btn btn-profile">
+							<span class="btn-icon">👤</span>
+							Profilo
+						</a>
+						<a href="/logout" class="btn btn-logout">
+							<span class="btn-icon">🚪</span>
+							Logout
+						</a>
+					</p>
+				</div>
+				<div th:unless="${user}" class="auth-buttons">
+					<span><a href="/login" class="btn btn-login">Accedi</a></span>
+					<span><a href="/register" class="btn btn-register">Registrati</a></span>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<main class="add-review-main">
+		<div th:if="${giaEsiste}" class="error-message full-width">
+			<p th:text="${giaEsiste}"></p>
+			<p class="mt-15">
+				<a th:href="@{/user/book}" class="btn btn-home">
+					<span class="btn-icon">📚</span>
+					Torna ai libri
+				</a>
+			</p>
+		</div>
+		<div th:unless="${giaEsiste}" class="form-container">
+			<div class="page-header">
+				<h1 class="page-title">Aggiungi una recensione al libro</h1>
+				<p class="book-title-display">
+					<strong th:text="${book.titolo}">Titolo del Libro</strong>
+				</p>
+			</div>
+
+			<form th:action="@{/user/book/{bookId}/addReview(bookId=${book.id})}" method="POST" th:object="${review}" class="review-form-card">
+				<h2>Compila la tua recensione</h2>
+
+				<div class="form-group">
+					<label for="titolo">Titolo recensione</label>
+					<input type="text" id="titolo" th:field="*{titolo}" class="form-input" />
+					<span th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}" class="error-message"></span>
+				</div>
+
+				<div class="form-group">
+					<label for="voto">Voto (da 1 a 5)</label>
+					<input type="number" id="voto" min="1" max="5" step="1" th:field="*{voto}" class="form-input" />
+					<span th:if="${#fields.hasErrors('voto')}" th:errors="*{voto}" class="error-message"></span>
+				</div>
+
+				<div class="form-group">
+					<label for="testo">Descrizione</label>
+					<textarea id="testo" th:field="*{testo}" rows="5" class="form-input textarea-input"></textarea>
+					<span th:if="${#fields.hasErrors('testo')}" th:errors="*{testo}" class="error-message"></span>
+				</div>
+
+				<div class="form-actions">
+					<button type="submit" class="btn btn-submit">
+						<span class="btn-icon">📝</span>
+						Aggiungi Recensione
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="back-links" th:unless="${giaEsiste}">
+			<a href="/user/book" class="btn btn-secondary">
+				<span class="btn-icon">📚</span>
+				Torna ai libri
+			</a>
+			<a href="/user" class="btn btn-home">
+				<span class="btn-icon">🏠</span>
+				Torna alla home
+			</a>
+		</div>
+	</main>
+
+	<footer class="footer">
+		<p>SiwBooks - Biblioteca digitale</p>
+	</footer>
  </body>
 </html>

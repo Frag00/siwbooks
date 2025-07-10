@@ -1,0 +1,153 @@
+/* Importa Bootstrap CSS */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* Reset e configurazione base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex; /* Utilizza flexbox per centrare il contenuto */
+    flex-direction: column;
+    justify-content: space-between; /* Sposta il footer in fondo */
+    align-items: center;
+}
+
+/* Contenitore di errore */
+.error-container {
+    flex-grow: 1; /* Permette al contenitore di occupare lo spazio disponibile */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente il contenuto */
+    align-items: center; /* Centra orizzontalmente il contenuto */
+    text-align: center;
+    padding: 30px;
+    max-width: 800px;
+    width: 100%;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.error-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    background: linear-gradient(45deg, #e74c3c, #c0392b); /* Colore più adatto per errore */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.error-subtitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.error-actions {
+    display: flex;
+    justify-content: center;
+}
+
+/* Stile per i bottoni */
+.btn {
+    padding: 10px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a6f); /* Simile al btn-primary dell'index */
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.btn-icon {
+    font-size: 1.3rem;
+}
+
+/* Footer (ripreso dall'index.css) */
+.footer {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+    width: 100%; /* Occupa tutta la larghezza */
+    backdrop-filter: blur(10px);
+}
+
+.footer p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Effetti di background animati (ripresi dall'index.css) */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .error-title {
+        font-size: 2.5rem;
+    }
+    .error-subtitle {
+        font-size: 1.4rem;
+    }
+    .btn-primary {
+        padding: 12px 30px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-title {
+        font-size: 2rem;
+    }
+    .error-subtitle {
+        font-size: 1.1rem;
+    }
+}
