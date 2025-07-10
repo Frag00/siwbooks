@@ -31,4 +31,8 @@ public class BookService {
 		bookRepository.delete(daRimuovere);
 		
 	}
+	
+	public boolean existsBookByTitoloAndAnnoAndAutori(Book book) {
+		return bookRepository.existsByTitoloAndAnnoPubblicazioneAndAutori(book.getTitolo(),book.getAnnoPubblicazione(),book.getAutori());
+	}
 }

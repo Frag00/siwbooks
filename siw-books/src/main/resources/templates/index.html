@@ -1,22 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>SiwBooks</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-      <h1><strong>SiwBooks</strong></h1>
-	  <header>
-		<div th:if="${user}">
-			<p th:text="${user.nome + ' ' + user.cognome}"></p>
-	  		<p><a href="/logout">Logout</a></p>
-		</div>
-		<p th:unless="${user}">
-			<span><a href="/login">Accedi</a></span>
-			<span><a href="/register">Registrati</a></span></p>	
-	  </header>
-	  <h2>Pagina iniziale</h2>
-	  <p><a href="/book">Tutti i libri</a></p>
-	  <p><a href="/author">Tutti gli autori</a></p>
-  </body>
+    <link rel="stylesheet" href="/css/stylesIndex.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1 class="logo"><strong>SiwBooks</strong></h1>
+            </div>
+            <div class="navbar-nav">
+                <div th:if="${user}" class="user-info">
+                    <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+                    <p class="user-actions"><a href="/logout" class="btn btn-logout">Logout</a></p>
+                </div>
+                <div th:unless="${user}" class="auth-buttons">
+                    <span><a href="/login" class="btn btn-login">Accedi</a></span>
+                    <span><a href="/register" class="btn btn-register">Registrati</a></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Benvenuto su SiwBooks</h1>
+            <h2 class="hero-subtitle">La tua biblioteca digitale</h2>
+            <p class="hero-description">Scopri migliaia di libri e autori nella nostra collezione digitale</p>
+            <div class="hero-buttons">
+                <a href="/book" class="btn btn-primary">
+                    <span class="btn-icon">📚</span>
+                    Tutti i libri
+                </a>
+                <a href="/author" class="btn btn-secondary">
+                    <span class="btn-icon">✍️</span>
+                    Tutti gli autori
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="floating-element element-1">📖</div>
+            <div class="floating-element element-2">📚</div>
+            <div class="floating-element element-3">✨</div>
+            <div class="floating-element element-4">🔖</div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>SiwBooks - Biblioteca digitale</p>
+    </footer>
+</body>
 </html>

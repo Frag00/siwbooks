@@ -8,6 +8,9 @@
 					<p th:text="${user.nome + ' ' + user.cognome}"></p>
 			  		<p><a href="/logout">Logout</a></p>
 				</div>
+				<p th:unless="${user}">
+					<span><a href="/login">Accedi</a></span>
+					<span><a href="/register">Registrati</a></span></p>	
 		 <h1>Tutti gli Autori</h1>
 		 <div th:if="${authors.isEmpty()}">Non ci sono autori nel sistema</div>
 		 <ul>

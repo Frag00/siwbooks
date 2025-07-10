@@ -2,25 +2,65 @@
 <html>
   <head>
     <title>SiwBooks</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/css/stylesLogin.css" />
   </head>
   <body>
-      <h1><strong>SiwBooks</strong></h1>
-	  <div th:if="${param.registered}" style="color: green; margin-bottom: 10px;">
-	      Registrazione completata con successo! Ora puoi effettuare il login.
-	  </div>
-	  <h2>Hai già un account? Accedi</h2>
-	  <form th:action="@{/login}" method="post">
-		<div>
-			<span>Username : </span>
-			<span><input type="text" required name="username" autocomplete="off"></span>
-		</div>
-		<div>
-			<span>Password : </span>
-			<span><input type="password" required name="pwd" autocomplete="off"></span>
-		</div>
-		<span><button type="submit">Login</button></span>
-	  </form>
-	  <p><a href="/register">Registrati</a></p>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <h1 class="logo"><strong>SiwBooks</strong></h1>
+        </div>
+        <div class="navbar-nav">
+          <div th:if="${user}" class="user-info">
+            <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+            <p class="user-actions"><a href="/logout" class="btn btn-logout">Logout</a></p>
+          </div>
+          <div th:unless="${user}" class="auth-buttons">
+            <span><a href="/login" class="btn btn-login">Accedi</a></span>
+            <span><a href="/register" class="btn btn-register">Registrati</a></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenuto principale -->
+    <main class="hero-section">
+      <div class="hero-content">
+        <h2 class="hero-subtitle">Hai già un account? Accedi</h2>
+
+        <div th:if="${param.registered}" style="color: #2ecc71; margin-bottom: 15px; font-weight: 600;">
+          Registrazione completata con successo! Ora puoi effettuare il login.
+        </div>
+
+        <form th:action="@{/login}" method="post" style="display: flex; flex-direction: column; gap: 15px; max-width: 400px;">
+          <div>
+            <label for="username" style="color: white; font-weight: 500;">Username:</label>
+            <input type="text" name="username" required autocomplete="off" class="form-control" />
+          </div>
+          <div>
+            <label for="pwd" style="color: white; font-weight: 500;">Password:</label>
+            <input type="password" name="pwd" required autocomplete="off" class="form-control" />
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">Login</button>
+        </form>
+
+        <p class="mt-4">
+          <a th:href="@{/}" class="btn btn-secondary">Torna alla Homepage</a>
+        </p>
+      </div>
+
+      <div class="hero-image">
+        <div class="floating-element element-1">🔐</div>
+        <div class="floating-element element-2">📘</div>
+        <div class="floating-element element-3">🔑</div>
+        <div class="floating-element element-4">👤</div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>SiwBooks - Biblioteca digitale</p>
+    </footer>
   </body>
 </html>

@@ -37,6 +37,13 @@ public class CredentialsService {
 		this.credentialsRepository.save(credentials);
 
 	}
+	
+	public void saveCredentialsForAdmin(@Valid Credentials credentials) {
+		credentials.setRuolo(ruoloAdmin);
+		credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
+		this.credentialsRepository.save(credentials);
+
+	}
 
 	public Credentials getCredentialsByUser(User user) {
 		return this.credentialsRepository.findByUtente(user).orElse(null);

@@ -8,6 +8,9 @@
 					<p th:text="${user.nome + ' ' + user.cognome}"></p>
 			  		<p><a href="/logout">Logout</a></p>
 				</div>
+				<p th:unless="${user}">
+					<span><a href="/login">Accedi</a></span>
+					<span><a href="/register">Registrati</a></span></p>	
 		<div th:if="${author}">
 			<h1 th:text="${author.nome + ' ' + author.cognome}">Nome e cognome</h1>
 			<div>Data di nascita : <span th:text="${author.dataNascita} ">2000</span></div>

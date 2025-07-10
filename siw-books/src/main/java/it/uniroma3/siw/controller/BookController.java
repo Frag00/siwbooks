@@ -195,12 +195,14 @@ public class BookController {
 	
 	@PostMapping("/admin/book/{idB}/edit")
 	public String adminEditsBook(@Valid @ModelAttribute("book") Book book,BindingResult bindingResult,@RequestParam(value = "autori", required = false) List<Long> autoriIds,@RequestParam("imageFiles") MultipartFile[] imageFiles,@PathVariable("idB") Long idB,Model model) {
-		if(this.bookService.existsByTitoloAndAnno(book)) {
+		/*if(this.bookService.existsBookByTitoloAndAnnoAndAutori(book)) {
 			model.addAttribute("errEsiste","Libro già presente");
 			model.addAttribute("authors",authorService.getAllAuthors());
+			book.setId(idB);
+			model.addAttribute("book",book);
 			return "admin/formEditBook.html";
 		}
-		else if(bindingResult.hasErrors()) {
+		else */if(bindingResult.hasErrors()) {
 			model.addAttribute("authors",authorService.getAllAuthors());
 			book.setId(idB);
 			model.addAttribute("book",book);

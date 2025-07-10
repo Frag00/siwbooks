@@ -7,6 +7,7 @@
  <div th:if="${user}">
 			<p th:text="${user.nome + ' ' + user.cognome}"></p>
 	  		<p><a href="/logout">Logout</a></p>
+			<p><a th:href="@{/admin/profile}">Profilo</a></p>
 		</div>
 	 <h1>Modifica l'autore</h1>
 	 <form th:action="@{/admin/author/{idA}/edit(idA=${author.id})}" method="POST" th:object="${author}" enctype="multipart/form-data">

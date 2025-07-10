@@ -1,40 +1,90 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>SiwBooks</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-      <h1><strong>SiwBooks</strong></h1>
-	  <h2>REGISTRAZIONE</h2>
-	  <form th:action="@{/register}" method="post" autocomplete="off">
-		<div>
-				<span>Nome : </span>
-				<span><input type="text" th:field="${utente.nome}"  autocomplete="off" /></span>
-				<span th:if="${#fields.hasErrors('utente.nome')}" th:errors="${utente.nome}"></span>
-		</div>
-		<div>
-				<span>Cognome : </span>
-				<span><input type="text"  th:field="${utente.cognome}"  autocomplete="off" /></span>
-				<span th:if="${#fields.hasErrors('utente.cognome')}" th:errors="${utente.cognome}"></span>
-		</div>
-		<div>
-				<span>Email : </span>
-				<span><input type="text"  th:field="${utente.email}"  autocomplete="off" /></span>
-				<span th:if="${#fields.hasErrors('utente.email')}" th:errors="${utente.email}"></span>
-		</div>
-		<div>
-			<span>Username : </span>
-			<span><input type="text"  th:field="${credentials.username}"  autocomplete="off" /></span>
-			<span th:if="${#fields.hasErrors('credentials.username')}" th:errors="${credentials.username}"></span>
-		</div>
-		<div>
-			<span>Password : </span>
-			<span><input type="password"  th:field="${credentials.password}"  autocomplete="off" /></span>
-			<span th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}"></span>
-		</div>
-		<span><button type="submit">Registrati</button></span>
-	  </form>
-	  <div th:if="${esiste}"><span th:text="${esiste}"></span></div>
-  </body>
+<head>
+  <title>SiwBooks</title>
+  <link rel="stylesheet" href="/css/stylesRegister.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-brand">
+        <h1 class="logo"><strong>SiwBooks</strong></h1>
+      </div>
+      <div class="navbar-nav">
+        <div th:if="${user}" class="user-info">
+          <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+          <p class="user-actions"><a href="/logout" class="btn btn-logout">Logout</a></p>
+        </div>
+        <div th:unless="${user}" class="auth-buttons">
+          <span><a href="/login" class="btn btn-login">Accedi</a></span>
+          <span><a href="/register" class="btn btn-register">Registrati</a></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenuto principale -->
+  <main class="hero-section">
+    <div class="hero-content">
+      <h2 class="hero-subtitle">Crea un nuovo account</h2>
+
+      <form th:action="@{/register}" method="post" autocomplete="off"
+            style="display: flex; flex-direction: column; gap: 15px; max-width: 500px;">
+
+        <div>
+          <label style="color: white; font-weight: 500;">Nome:</label>
+          <input type="text" th:field="${utente.nome}" autocomplete="off" class="form-control" />
+          <span th:if="${#fields.hasErrors('utente.nome')}" th:errors="${utente.nome}"></span>
+        </div>
+
+        <div>
+          <label style="color: white; font-weight: 500;">Cognome:</label>
+          <input type="text" th:field="${utente.cognome}" autocomplete="off" class="form-control" />
+          <span th:if="${#fields.hasErrors('utente.cognome')}" th:errors="${utente.cognome}"></span>
+        </div>
+
+        <div>
+          <label style="color: white; font-weight: 500;">Email:</label>
+          <input type="text" th:field="${utente.email}" autocomplete="off" class="form-control" />
+          <span th:if="${#fields.hasErrors('utente.email')}" th:errors="${utente.email}"></span>
+        </div>
+
+        <div>
+          <label style="color: white; font-weight: 500;">Username:</label>
+          <input type="text" th:field="${credentials.username}" autocomplete="off" class="form-control" />
+          <span th:if="${#fields.hasErrors('credentials.username')}" th:errors="${credentials.username}"></span>
+        </div>
+
+        <div>
+          <label style="color: white; font-weight: 500;">Password:</label>
+          <input type="password" th:field="${credentials.password}" autocomplete="off" minlength="8" class="form-control" />
+          <span th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Registrati</button>
+      </form>
+
+      <div th:if="${esiste}" style="color: red; margin-top: 15px;">
+        <span th:text="${esiste}"></span>
+      </div>
+
+      <p class="mt-4">
+        <a th:href="@{/}" class="btn btn-secondary">Torna alla Homepage</a>
+      </p>
+    </div>
+
+    <div class="hero-image">
+      <div class="floating-element element-1">📖</div>
+      <div class="floating-element element-2">📝</div>
+      <div class="floating-element element-3">📚</div>
+      <div class="floating-element element-4">👥</div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>SiwBooks - Biblioteca digitale</p>
+  </footer>
+</body>
 </html>

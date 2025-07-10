@@ -72,7 +72,7 @@ public class AuthConfiguration {
 					boolean isAdmin = this.credentialsService.getCredentialsByUsername(username).getRuolo().equals(ruoloAdmin);
 					if (isAdmin) {
 						// Se ADMIN, redirect operatore (sostituisci idUtente)
-						response.sendRedirect(idUtente != null ? "/admin": "/login");
+						response.sendRedirect(idUtente != null ? "/admin/profile": "/login");
 					} else {
 						// Se Utente, redirect utente (sostituisci idUtente)
 						response.sendRedirect(idUtente != null ? "/user/profile" : "/login");

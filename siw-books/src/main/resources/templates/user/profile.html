@@ -1,30 +1,60 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Profilo utente</title>
-	</head>
-	<body> 
-		<div th:if="${user}">
-					<p th:text="${user.nome + ' ' + user.cognome}"></p>
-			  		<p><a href="/logout">Logout</a></p>
-				</div>
-		<div th:if="${user}">
-			<h1 th:text="${user.nome + ' ' + user.cognome}">Nome e cognome</h1>
-			<div>Email : <span th:text="${user.email} ">2000</span></div>
-			<div th:if="${!user.recensioni.isEmpty()}">
-				<h3>Le tue recensioni :</h3>
-					<ul>
-						<li th:each="r : ${recensioni}">
-							<span th:utext="${r.titolo + '<br/>' + r.voto + '<br/>' + r.testo + '<br/>'}">Recensione</span>
-							<p th:if="${r.libro}">
-								<span>Relativa al libro :</span>
-								<a th:href="@{'/user/book' + '/' + ${r.libro.id}}" th:text="${' ' + r.libro.titolo}">Libro</a>
-							</p>
-						</li>
-					</ul>
-			</div> 
-			
-		</div>
-		<p><a href="/user">Vai alla Homepage</a></p>
-	</body>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <title>Profilo utente</title>
+    <link rel="stylesheet" href="/css/stylesUserProfile.css" />
+</head>
+<body>
+    <!-- Navbar coerente -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1 class="logo"><strong>SiwBooks</strong></h1>
+            </div>
+            <div class="navbar-nav">
+                <div th:if="${user}" class="user-info">
+                    <p class="user-name" th:text="${user.nome + ' ' + user.cognome}"></p>
+                    <p class="user-actions"><a href="/logout" class="btn btn-logout">Logout</a></p>
+                </div>
+                <div th:unless="${user}" class="auth-buttons">
+                    <span><a href="/login" class="btn btn-login">Accedi</a></span>
+                    <span><a href="/register" class="btn btn-register">Registrati</a></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Box profilo utente -->
+    <main class="profile-container" th:if="${user}">
+        <h1 th:text="${user.nome + ' ' + user.cognome}">Nome e cognome</h1>
+        <div>Email: <span th:text="${user.email}">email@example.com</span></div>
+
+        <div th:if="${!user.recensioni.isEmpty()}">
+            <h3>Le tue recensioni:</h3>
+            <ul>
+                <li th:each="r : ${recensioni}">
+                    <span th:utext="${r.titolo + '<br/>' + r.voto + '<br/>' + r.testo + '<br/>'}">Recensione</span>
+                    <p th:if="${r.libro}">
+                        Relativa al libro:
+                        <a th:href="@{'/user/book/' + ${r.libro.id}}" th:text="${r.libro.titolo}">Libro</a>
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <a th:href="@{/user/profile/formChangeProfile}" class="btn-profile btn-edit">Modifica Profilo</a>
+        <a th:href="@{/user/profile/formChangePassword}" class="btn-profile btn-edit">Cambia Password</a>
+    </main>
+
+    <!-- Pulsante per tornare alla home -->
+    <div class="profile-actions">
+        <a href="/user" class="btn-profile btn-home">Vai alla Homepage</a>
+    </div>
+
+    <!-- Footer coerente -->
+    <footer class="footer">
+        <p>SiwBooks - Biblioteca digitale</p>
+    </footer>
+</body>
 </html>

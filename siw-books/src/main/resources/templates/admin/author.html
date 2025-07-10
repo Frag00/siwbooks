@@ -7,6 +7,7 @@
 		<div th:if="${user}">
 					<p th:text="${user.nome + ' ' + user.cognome}"></p>
 			  		<p><a href="/logout">Logout</a></p>
+					<p><a th:href="@{/admin/profile}">Profilo</a></p>
 				</div>
 		<div th:if="${author}">
 			<h1 th:text="${author.nome + ' ' + author.cognome}">Nome e cognome</h1>
