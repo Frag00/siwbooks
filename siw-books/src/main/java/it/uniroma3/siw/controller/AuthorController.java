@@ -17,10 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Author;
 import it.uniroma3.siw.model.Book;
+import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Picture;
 import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.service.AuthorService;
 import it.uniroma3.siw.service.BookService;
+import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.PictureService;
 import jakarta.validation.Valid;
 
@@ -33,9 +35,21 @@ public class AuthorController {
 	private PictureService pictureService;
 	@Autowired 
 	private BookService bookService;
+	@Autowired 
+	private CredentialsService credentialsService;
 	
 	@GetMapping("/author")
 	public String showAuthors(Model model) {
+		
+		Credentials c = credentialsService.getCredentialsByUser(credentialsService.getCurrentUserM());
+		
+		if(c!=null) {	
+			if(c.getRuolo().equals("ADMIN"))
+				return "redirect:/admin/author";
+			else if(c.getRuolo().equals("DEFAULT"))
+				return "redirect:/user/author";
+		}
+		
 		model.addAttribute("authors",authorService.getAllAuthors());
 		return "authors.html";
 	}
@@ -54,6 +68,16 @@ public class AuthorController {
 	
 	@GetMapping("/author/{id}")
 	public String getAuthor(@PathVariable("id") Long id ,Model model ) {
+		Credentials c = credentialsService.getCredentialsByUser(credentialsService.getCurrentUserM());
+		
+		if(c!=null) {	
+			if(c.getRuolo().equals("ADMIN"))
+				return "redirect:/admin/author/" + id;
+			else if(c.getRuolo().equals("DEFAULT"))
+				return "redirect:/user/author/" + id;
+		}
+		
+		
 		model.addAttribute("author", authorService.getAuthorById(id));
 		return "author.html";
 	}
@@ -207,6 +231,63 @@ public class AuthorController {
 		
 	}
  }
+	
+	
+	/* implementazione barra di ricerca per titolo */ 
+	
+	@GetMapping("/author/search")
+	public String searchAuthor(@RequestParam String ricerca, Model model) {
+		
+		//controllo coerenza ruoli
+		Credentials c = credentialsService.getCredentialsByUser(credentialsService.getCurrentUserM());
+		
+		if(c!=null) {	
+			if(c.getRuolo().equals("ADMIN"))
+				return "redirect:/admin/author";
+			else if(c.getRuolo().equals("DEFAULT"))
+				return "redirect:/user/author";
+		}
+		///////////////////////////////
+		
+		if(ricerca==null || ricerca.isBlank() || ricerca.isEmpty()) {
+			model.addAttribute("authors", authorService.getAllAuthors());
+			return "authors.html";
+		}
+		
+		Iterable<Author> risultato = authorService.searchAuthorByNomeOrCognome(ricerca, ricerca);
+		model.addAttribute("authors", risultato);
+		model.addAttribute("ricerca", ricerca);
+		return "authors.html";
+		
+	}
+	
+	@GetMapping("/user/author/search")
+	public String userSearchAuthor(@RequestParam String ricerca, Model model) {
+		if(ricerca==null || ricerca.isBlank() || ricerca.isEmpty()) {
+			model.addAttribute("authors", authorService.getAllAuthors());
+			return "user/authors.html";
+		}
+		
+		Iterable<Author> risultato = authorService.searchAuthorByNomeOrCognome(ricerca, ricerca);
+		model.addAttribute("authors", risultato);
+		model.addAttribute("ricerca", ricerca);
+		return "user/authors.html";
+		
+	}
+	
+	@GetMapping("/admin/author/search")
+	public String adminSearchAuthor(@RequestParam String ricerca, Model model) {
+		if(ricerca==null || ricerca.isBlank() || ricerca.isEmpty()) {
+			model.addAttribute("authors", authorService.getAllAuthors());
+			return "admin/authors.html";
+		}
+		
+		Iterable<Author> risultato = authorService.searchAuthorByNomeOrCognome(ricerca, ricerca);
+		model.addAttribute("authors", risultato);
+		model.addAttribute("ricerca", ricerca);
+		return "admin/authors.html";
+		
+	}
 	
 	
 }

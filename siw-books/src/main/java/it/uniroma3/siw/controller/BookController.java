@@ -23,11 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Book;
+import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Picture;
 import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.model.Author;
 import it.uniroma3.siw.service.AuthorService;
 import it.uniroma3.siw.service.BookService;
+import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.PictureService;
 import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
@@ -43,6 +45,8 @@ public class BookController {
 	
 	@Autowired UserService userService;
 	
+	@Autowired CredentialsService credentialsService;
+	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 	    binder.setDisallowedFields("immagini");
@@ -50,10 +54,19 @@ public class BookController {
 	
 	@GetMapping("/book")
 	public String showBooks(Model model) {
+		Credentials c = credentialsService.getCredentialsByUser(credentialsService.getCurrentUserM());
+		
+		if(c!=null) {	
+			if(c.getRuolo().equals("ADMIN"))
+				return "redirect:/admin/book";
+			else if(c.getRuolo().equals("DEFAULT"))
+				return "redirect:/user/book";
+		}
+		
 		model.addAttribute("books", this.bookService.getAllBooks());
 		return "books.html";
 	}
-	///////////////////////// cancella 
+	
 	@GetMapping("/user/book")
 	public String showsBooks(Model model) {
 		model.addAttribute("books", this.bookService.getAllBooks());
@@ -67,6 +80,15 @@ public class BookController {
 	
 	@GetMapping("/book/{id}")
 	public String getBook(@PathVariable("id") Long id, Model model) {
+		Credentials c = credentialsService.getCredentialsByUser(credentialsService.getCurrentUserM());
+		
+		if(c!=null) {	
+			if(c.getRuolo().equals("ADMIN"))
+				return "redirect:/admin/book/" + id;
+			else if(c.getRuolo().equals("DEFAULT"))
+				return "redirect:/user/book/" + id;
+		}
+		
 		model.addAttribute("book",this.bookService.getBookById(id));
 		return "book.html";
 	}
@@ -268,5 +290,63 @@ public class BookController {
 	        }
 		}
 	}
+	
+	/* implementazione barra di ricerca per titolo */ 
+	
+	@GetMapping("/book/search")
+	public String searchBook(@RequestParam String ricerca, Model model) {
+		//controllo coerenza ruoli
+		Credentials c = credentialsService.getCredentialsByUser(credentialsService.getCurrentUserM());
+		
+		if(c!=null) {	
+			if(c.getRuolo().equals("ADMIN"))
+				return "redirect:/admin/book";
+			else if(c.getRuolo().equals("DEFAULT"))
+				return "redirect:/user/book";
+		}
+		///////////////////////////////
+		
+		if(ricerca==null || ricerca.isBlank() || ricerca.isEmpty()) {
+			model.addAttribute("books", bookService.getAllBooks());
+			return "books.html";
+		}
+		
+		Iterable<Book> risultato = bookService.searchByTitolo(ricerca);
+		model.addAttribute("books", risultato);
+		model.addAttribute("ricerca", ricerca);
+		return "books.html";
+		
+	}
+	
+	@GetMapping("/user/book/search")
+	public String userSearchBook(@RequestParam String ricerca, Model model) {
+		if(ricerca==null || ricerca.isBlank() || ricerca.isEmpty()) {
+			model.addAttribute("books", bookService.getAllBooks());
+			return "user/books.html";
+		}
+		
+		Iterable<Book> risultato = bookService.searchByTitolo(ricerca);
+		model.addAttribute("books", risultato);
+		model.addAttribute("ricerca", ricerca);
+		return "user/books.html";
+		
+	}
+	
+	@GetMapping("/admin/book/search")
+	public String adminSearchBook(@RequestParam String ricerca, Model model) {
+		if(ricerca==null || ricerca.isBlank() || ricerca.isEmpty()) {
+			model.addAttribute("books", bookService.getAllBooks());
+			return "admin/books.html";
+		}
+		
+		Iterable<Book> risultato = bookService.searchByTitolo(ricerca);
+		model.addAttribute("books", risultato);
+		model.addAttribute("ricerca", ricerca);
+		return "admin/books.html";
+		
+	}
+	
+	
+	
 	
 }

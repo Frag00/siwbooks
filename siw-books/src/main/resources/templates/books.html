@@ -29,7 +29,19 @@
             <h1 class="page-title">Tutti i libri</h1>
             <p class="section-description">Esplora la nostra vasta collezione di titoli disponibili.</p>
         </div>
+		
+		<!--Barra di ricerca per titolo-->
+		
+		<div class="search-bar-container">
+		   <form action="/book/search" method="GET" class="search-bar-form" id="bookSearchForm">
+		       <input type="text" name="ricerca" th:value="${ricerca}" placeholder="Cerca per titolo..." class="search-bar-input" id="searchInput" />
+		       <button type="submit" class="btn btn-search" id="searchButton">Cerca</button>
+		   </form>
+		</div>
 
+		
+		<!------------------------------->
+		
         <div th:if="${books.isEmpty()}" class="no-content-message">
             <p>Non ci sono libri disponibili nel sistema al momento.</p>
         </div>

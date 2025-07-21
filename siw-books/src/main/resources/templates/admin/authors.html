@@ -37,6 +37,18 @@
 			<div class="page-header">
 				<h1 class="page-title">Tutti gli Autori</h1>
 			</div>
+			
+			<!--Barra di ricerca-->
+			
+			<div class="search-bar-container">
+			   <form action="/admin/author/search" method="GET" class="search-bar-form" id="searchFormAdminAuthor">
+			       <input type="text" name="ricerca" th:value="${ricerca}" placeholder="Cerca per nome o cognome..." class="search-bar-input" id="searchInputAdminAuthor" />
+			       <button type="submit" class="btn btn-search" id="searchButtonAdminAuthor">Cerca</button>
+			   </form>
+			</div>
+
+			
+			<!-------------------->
 
 			<div th:if="${authors.isEmpty()}" class="info-message-card">
 				<p>Non ci sono autori nel sistema</p>

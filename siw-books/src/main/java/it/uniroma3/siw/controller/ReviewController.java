@@ -125,6 +125,7 @@ public class ReviewController {
 	public String userEditsReview(@Valid @ModelAttribute("review") Review r, BindingResult bindingResult, Model model, @PathVariable("idB") Long idB , @PathVariable("idR") Long idR ) {
 		
 		if(bindingResult.hasErrors()) {
+			r.setId(idR);
 			model.addAttribute("review", r);
 			model.addAttribute("book", bookService.getBookById(idB));
 			return "user/formEditReview.html";

@@ -39,4 +39,8 @@ public class AuthorService {
 		authorRepository.delete(daRimuovere);
 		
 	}
+	
+	public Iterable<Author> searchAuthorByNomeOrCognome(String n, String c){
+		return authorRepository.findByNomeContainingIgnoreCaseOrCognomeContainingIgnoreCase(n, c);
+	}
 }

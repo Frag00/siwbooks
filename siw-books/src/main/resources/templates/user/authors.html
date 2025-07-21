@@ -38,6 +38,18 @@
 				<h1 class="page-title">Tutti gli Autori</h1>
 				<p class="section-description">Scopri gli scrittori dietro le tue storie preferite.</p>
 			</div>
+			
+			<!--Barra di ricerca-->
+			
+			<div class="search-bar-container">
+			   <form action="/user/author/search" method="GET" class="search-bar-form" id="searchFormUserAuthor">
+			       <input type="text" name="ricerca" th:value="${ricerca}" placeholder="Cerca per nome o cognome..." class="search-bar-input" id="searchInputUserAuthor" />
+			       <button type="submit" class="btn btn-search" id="searchButtonUserAuthor">Cerca</button>
+			   </form>
+			</div>
+
+			
+			<!-------------------->
 
 			<div th:if="${authors.isEmpty()}" class="no-content-message">Non ci sono autori nel sistema.</div>
 

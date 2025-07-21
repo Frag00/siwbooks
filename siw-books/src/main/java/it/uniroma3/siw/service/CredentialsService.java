@@ -61,4 +61,19 @@ public class CredentialsService {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return this.getCredentialsByUsername(userDetails.getUsername()).getUtente();
 	}
+	
+	//currentUser modificato
+	public User getCurrentUserM() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if (principal instanceof UserDetails) {
+	        String username = ((UserDetails) principal).getUsername();
+	        Credentials credentials = this.getCredentialsByUsername(username);
+	        if (credentials != null)
+	            return credentials.getUtente();
+	    }
+
+	    return null; // utente anonimo
+	}
+	
 }

@@ -12,4 +12,5 @@ public interface AuthorRepository extends CrudRepository<Author,Long>{
 
 	boolean existsByNomeAndCognomeAndDataNascita(String nome,String cognome,LocalDate dataNascita);
 
+	public Iterable<Author> findByNomeContainingIgnoreCaseOrCognomeContainingIgnoreCase(String nome, String cognome);
 }

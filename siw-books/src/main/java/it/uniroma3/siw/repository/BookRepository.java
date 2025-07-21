@@ -12,4 +12,5 @@ import it.uniroma3.siw.model.Picture;
 public interface BookRepository extends CrudRepository<Book,Long>{
 	public boolean existsByTitoloAndAnnoPubblicazione(String titolo, Integer annoPubblicazione);
 	public boolean existsByTitoloAndAnnoPubblicazioneAndAutori(String titolo, Integer annoPubblicazione, Set<Author> autori);
+	public Iterable<Book> findByTitoloContainingIgnoreCase(String titolo);
 }

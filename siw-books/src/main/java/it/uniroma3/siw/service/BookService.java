@@ -35,4 +35,8 @@ public class BookService {
 	public boolean existsBookByTitoloAndAnnoAndAutori(Book book) {
 		return bookRepository.existsByTitoloAndAnnoPubblicazioneAndAutori(book.getTitolo(),book.getAnnoPubblicazione(),book.getAutori());
 	}
+	
+	public Iterable<Book> searchByTitolo(String titolo){
+		return bookRepository.findByTitoloContainingIgnoreCase(titolo);
+	}
 }

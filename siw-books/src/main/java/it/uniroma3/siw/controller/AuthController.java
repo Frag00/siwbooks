@@ -28,6 +28,15 @@ public class AuthController {
 	
 	@GetMapping("/")
 	public String getIndex() {
+		Credentials c = credentialsService.getCredentialsByUser(credentialsService.getCurrentUserM());
+		
+		if(c!=null) {	
+			if(c.getRuolo().equals("ADMIN"))
+				return "redirect:/admin";
+			else if(c.getRuolo().equals("DEFAULT"))
+				return "redirect:/user";
+		}
+		
 		return "index.html";
 	}
 	
