@@ -204,11 +204,29 @@ body::before {
 
 .books-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjusted minmax for books */
-    gap: 30px;
+    grid-template-columns: repeat(3, 1fr); /* sempre 3 colonne */
+    gap: 25px;
     width: 100%;
-    margin-top: 20px;
 }
+@media (max-width: 992px) {
+    .books-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .books-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.book-card {
+    height: 100%;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 
 .book-card {
     background: rgba(255, 255, 255, 0.95);
@@ -411,4 +429,15 @@ body::before {
 .btn-search:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.book-image {
+    max-width: 180px;
+    max-height: 180px;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    object-fit: cover; /* Assicura che l'immagine copra lo spazio senza distorsioni */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

@@ -56,7 +56,7 @@
 			<div th:unless="${authors.isEmpty()}" class="authors-grid">
 				<div th:each="author : ${authors}" class="author-card">
 					<a th:href="@{'/user/author' + '/' + ${author.id}}" class="author-link">
-						<div class="author-icon-placeholder">✍️</div>
+						<div th:if="${author.immagine}" class="author-icon-placeholder"><img th:src="${author.immagine.nome}" class="author-image"/></div>
 						<h2 class="author-name" th:text="${author.nome + ' ' + author.cognome}">Nome Autore</h2>
 					</a>
 				</div>

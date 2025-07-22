@@ -59,8 +59,10 @@
 					<li th:each="book : ${books}" class="book-card-item">
 						<div class="book-info">
 							<h3 class="book-title">
-								<a th:href="@{'/admin/book' + '/' + ${book.id}}"
-								th:text="${book.titolo}">titolo</a>
+								<a th:href="@{'/admin/book' + '/' + ${book.id}}">
+								<div th:if="${!book.immagini.isEmpty()}" class="book-icon-placeholder"><img th:src="${book.immagini[0].nome}" class="book-image"/></div>
+								<h2 th:text="${book.titolo + ' (' + book.annoPubblicazione + ')'}">titolo libro </h2>
+							</a>
 							</h3>
 						</div>
 						<div class="book-actions">

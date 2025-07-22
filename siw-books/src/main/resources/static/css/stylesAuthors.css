@@ -188,15 +188,37 @@ body::before {
     width: 100%;
     margin: 40px auto;
 }
-
+/* modifica */
 .authors-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(3, 1fr); /* Forza 3 colonne */
+    gap: 25px;
     width: 100%;
-    margin-top: 20px;
+}
+@media (max-width: 992px) {
+    .authors-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
+@media (max-width: 600px) {
+    .authors-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.author-card {
+    min-height: 280px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.author-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/*****************/
 .author-card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(15px);
@@ -398,4 +420,16 @@ body::before {
 .btn-search:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.author-image {
+    max-width: 200px;
+    max-height: 200px;
+    width: auto;
+    height: auto;
+    border-radius: 50%; /* Immagine circolare */
+    object-fit: cover;
+    border: 5px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

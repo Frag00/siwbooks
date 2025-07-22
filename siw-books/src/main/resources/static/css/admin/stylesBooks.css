@@ -210,15 +210,35 @@ body::before {
     width: 100%;
     margin-bottom: 40px;
 }
+/* inizio modifiche */
 
 .books-list-grid {
     list-style: none;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr); /* Forza 3 colonne */
     gap: 25px;
-    justify-content: center;
+    width: 100%;
 }
+@media (max-width: 992px) {
+    .books-list-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .books-list-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.book-card-item {
+    height: 100%;
+    min-height: 280px; /* oppure quello che ritieni visivamente giusto */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/**************/
 
 .book-card-item {
     background: rgba(255, 255, 255, 0.98);
@@ -494,3 +514,48 @@ body::before {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
+
+.book-icon-placeholder {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    color: #ff6b6b; /* Color from primary button, for consistency */
+}
+
+.book-image {
+    max-width: 180px;
+    max-height: 180px;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    object-fit: cover; /* Assicura che l'immagine copra lo spazio senza distorsioni */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+}
+
+.book-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.book-actions .btn {
+    flex: 1 1 45%;
+    max-width: 300px;
+    min-width: 140px;
+    text-align: center;
+    justify-content: center;
+    padding: 12px 20px;
+}
+

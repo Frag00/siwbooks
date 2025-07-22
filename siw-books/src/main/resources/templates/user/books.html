@@ -56,8 +56,8 @@
 			<div th:unless="${books.isEmpty()}" class="books-grid">
 				<div th:each="book : ${books}" class="book-card">
 					<a th:href="@{'/user/book' + '/' + ${book.id}}" class="book-link">
-						<div class="book-icon-placeholder">📚</div>
-						<h2 class="book-title" th:text="${book.titolo}">Titolo Libro</h2>
+						<div th:if="${!book.immagini.isEmpty()}" class="book-icon-placeholder"><img th:src="${book.immagini[0].nome}" class="book-image"/></div>
+						<h2 class="book-title" th:text="${book.titolo + ' (' + book.annoPubblicazione + ')'}">Titolo Libro</h2>
 					</a>
 				</div>
 			</div>

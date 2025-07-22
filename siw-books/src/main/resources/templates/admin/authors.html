@@ -59,8 +59,10 @@
 					<li th:each="author : ${authors}" class="author-card-item">
 						<div class="author-info">
 							<h3 class="author-name">
-								<a th:href="@{'/admin/author' + '/' + ${author.id}}"
-								th:text="${author.nome + ' ' + author.cognome}">nome e cognome</a>
+								<a th:href="@{'/admin/author' + '/' + ${author.id}}">
+									<div th:if="${author.immagine}" class="author-icon-placeholder"><img th:src="${author.immagine.nome}" class="author-image"/></div>										
+									<h2 th:text="${author.nome + ' ' + author.cognome}">nome e cognome</h2>
+								</a>
 							</h3>
 						</div>
 						<div class="author-actions">
